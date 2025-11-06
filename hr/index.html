@@ -180,7 +180,7 @@
       formData.forEach((value, key) => (data[key] = value));
 
       try {
-        const res = await fetch("https://wowflo.io/webhook-test/requirement-submit", {
+        const res = await fetch("https://wowflo.io/webhook/requirement-submit", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
@@ -199,3 +199,4 @@
   </script>
 </body>
 </html>
+
