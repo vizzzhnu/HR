@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Slot Selection</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 0.95em;
+    }
+
+    /* Info Section */
+    .info-section {
+      background: #f0f4ff;
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .info-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+    .info-item {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 3px solid #667eea;
+    }
+    .info-label {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .info-value {
+      color: #333;
+      font-size: 1em;
+      word-break: break-word;
+    }
+    .summary-box {
+      background: white;
+      padding: 15px;
+      border-radius: 6px;
+      border-left: 3px solid #667eea;
+      margin-top: 15px;
+    }
+    .summary-label {
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 8px;
+      font-size: 0.9em;
+      text-transform: uppercase;
+    }
+    .summary-text {
+      color: #333;
+      line-height: 1.5;
+    }
+
+    /* Section Title */
+    .section-title {
+      background: #667eea;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 30px 0 20px 0;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    /* Time Slots Grid */
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .slot-card {
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 20px;
+      background: #fafafa;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+    }
+    .slot-card:hover:not(.unavailable) {
+      border-color: #667eea;
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+      transform: translateY(-2px);
+    }
+    .slot-card.selected {
+      border-color: #28a745;
+      background: #d4edda;
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.2);
+    }
+    .slot-card.unavailable {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background: #f8f9fa;
+    }
+    .unavailable-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #dc3545;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      font-weight: bold;
+    }
+    .slot-number {
+      font-weight: bold;
+      color: #667eea;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    .slot-date {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .slot-time {
+      font-size: 1.5em;
+      color: #667eea;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+    .slot-checkbox {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #667eea;
+    }
+    .slot-checkbox:disabled {
+      cursor: not-allowed;
+    }
+    .checkbox-text {
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Contact Details Form */
+    .contact-form {
+      background: #f0f8ff;
+      border: 1px solid #b3d9ff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    input, textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .phone-error {
+      color: #d32f2f;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    /* Buttons */
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+      transition: all 0.3s;
+      flex: 1;
+      min-width: 150px;
+    }
+    .btn-submit {
+      background-color: #28a745;
+      color: white;
+    }
+    .btn-submit:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+    .btn-submit:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .btn-reset {
+      background-color: #6c757d;
+      color: white;
+    }
+    .btn-reset:hover {
+      background-color: #5a6268;
+    }
+
+    /* Loading */
+    .loader {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    .loader.active {
+      display: block;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Messages */
+    .message {
+      display: none;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 20px;
+      border: 1px solid;
+    }
+    .message.show {
+      display: block;
+    }
+    .success-msg {
+      background: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
+    }
+    .error-msg {
+      background: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
+    }
+
+    /* Selected Slot Display */
+    .selected-slot-display {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 15px;
+      display: none;
+    }
+    .selected-slot-display.show {
+      display: block;
+    }
+    .selected-slot-display strong {
+      color: #155724;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      .info-row {
+        grid-template-columns: 1fr;
+      }
+      .slots-grid {
+        grid-template-columns: 1fr;
+      }
+      .button-group {
+        flex-direction: column;
+      }
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📅 Select Your Interview Slot</h1>
+    <p class="subtitle">Choose your preferred time to meet with our team</p>
+
+    <!-- Candidate Information Display -->
+    <div class="info-section" id="candidateInfo">
+      <strong style="font-size: 1.1em; color: #667eea;">📋 Interview Details</strong>
+      <div class="info-row">
+        <div class="info-item">
+          <div class="info-label">Candidate Name</div>
+          <div class="info-value" id="displayCandidateName">Loading...</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">Candidate Email</div>
+          <div class="info-value" id="displayCandidateEmail">Loading...</div>
+        </div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">Position/Summary</div>
+        <div class="summary-text" id="displaySummary">Loading...</div>
+      </div>
+      <div class="info-row" style="margin-top: 15px;">
+        <div class="info-item">
+          <div class="info-label">Mode of Interview</div>
+          <div class="info-value" id="displayModeOfInterview">Loading...</div>
+        </div>
+      </div>
+      <!-- Additional interview details -->
+      <div id="interviewDetailsSection" style="display: none; margin-top: 15px;">
+        <div class="info-item" id="meetingLinkContainer" style="display: none;">
+          <div class="info-label">🔗 Meeting Link</div>
+          <div class="info-value">
+            <a href="#" id="displayMeetingLink" target="_blank" style="color: #667eea; text-decoration: underline;">-</a>
+          </div>
+        </div>
+        <div class="info-item" id="meetingLocationContainer" style="display: none; margin-top: 10px;">
+          <div class="info-label">📍 Meeting Location</div>
+          <div class="info-value" id="displayMeetingLocation">-</div>
+        </div>
+      </div>
+    </div>
+
+    <form id="candidateResponseForm">
+      <!-- CRITICAL: Hidden fields that will be submitted with the form -->
+      <input type="hidden" name="executionId" id="hidden_executionId" value="">
+      <input type="hidden" name="type" id="hidden_type" value="">
+      <input type="hidden" name="selected_slot_number" id="hidden_slot_number" value="">
+      <input type="hidden" name="selected_slot_date" id="hidden_slot_date" value="">
+      <input type="hidden" name="selected_slot_time" id="hidden_slot_time" value="">
+      <input type="hidden" name="candidate_name" id="hidden_candidate_name" value="">
+      <input type="hidden" name="candidate_email" id="hidden_candidate_email" value="">
+      <input type="hidden" name="mode_of_interview" id="hidden_mode_of_interview" value="">
+      <input type="hidden" name="meeting_link" id="hidden_meeting_link" value="">
+      <input type="hidden" name="meeting_location" id="hidden_meeting_location" value="">
+      <input type="hidden" name="location_url" id="hidden_location_url" value="">
+      
+      <!-- Time Slots Selection -->
+      <div class="section-title">🕐 Available Interview Slots</div>
+      <p style="color: #666; font-size: 0.9em; margin-bottom: 15px;">
+        Click on the time slot that works best for you
+      </p>
+
+      <div class="slots-grid" id="slotsContainer">
+        <div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #999;">
+          Loading interview slots...
+        </div>
+      </div>
+
+      <div class="selected-slot-display" id="selectedSlotDisplay">
+        ✅ <strong id="selectedSlotText">Slot selected</strong>
+      </div>
+
+      <!-- Contact Details Section -->
+      <div class="section-title">📞 Your Contact Information</div>
+      
+      <div class="contact-form">
+        <div class="form-group">
+          <label>Phone Number * (10 digits)</label>
+          <input 
+            type="tel" 
+            name="phone_number" 
+            id="phone_number" 
+            placeholder="Enter your 10-digit phone number" 
+            required 
+            pattern="[0-9]{10}"
+            maxlength="10"
+          />
+          <span class="phone-error" id="phoneError">Please enter a valid 10-digit phone number</span>
+        </div>
+
+        <div class="form-group">
+          <label>Any Specific Requirements or Questions? (Optional)</label>
+          <textarea name="candidate_notes" id="candidate_notes" placeholder="Let us know if you have any questions or special requirements..."></textarea>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="button-group">
+        <button type="reset" class="btn-reset">🔄 Clear</button>
+        <button type="submit" class="btn-submit">✅ Submit & Confirm Slot</button>
+      </div>
+
+      <!-- Loading -->
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Processing your response...</p>
+      </div>
+
+      <!-- Messages -->
+      <div class="success-msg message" id="successMsg">
+        ✅ <strong>Thank you!</strong> Your interview slot has been confirmed. You will receive a confirmation email shortly.
+      </div>
+      <div class="error-msg message" id="errorMsg">
+        ❌ Error submitting response.
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Configuration - UPDATE THESE URLs
+    const N8N_GET_WEBHOOK_URL = 'https://n8n.wowflo.io/webhook/candidatedate';
+
+    let candidateData = null;
+    let selectedSlot = null;
+
+    // Get URL Parameters
+    function getURLParameters() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        executionId: params.get('executionId'),
+        candidateEmail: params.get('candidateEmail') || params.get('email') || '',
+        type: params.get('type') || 'candidate'
+      };
+    }
+
+    // Initialize Form
+    (async function initForm() {
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      const { executionId, candidateEmail, type } = getURLParameters();
+
+      console.log('📋 Form initialized');
+      console.log('ExecutionId:', executionId);
+      console.log('CandidateEmail:', candidateEmail || '(not provided)');
+      console.log('Type:', type);
+
+      // Populate hidden fields immediately
+      document.getElementById('hidden_executionId').value = executionId || '';
+      document.getElementById('hidden_type').value = type || 'candidate';
+
+      if (!executionId) {
+        showError('No Execution ID provided. Please check your link.');
+        return;
+      }
+
+      await loadCandidateData(executionId, candidateEmail);
+    })();
+
+    // Fetch Candidate Data from n8n
+    async function loadCandidateData(executionId, candidateEmail) {
+      try {
+        console.log('🔄 Fetching candidate data...');
+        
+        // Build URL with parameters
+        let url = `${N8N_GET_WEBHOOK_URL}?executionId=${encodeURIComponent(executionId)}`;
+        if (candidateEmail) {
+          url += `&candidateEmail=${encodeURIComponent(candidateEmail)}`;
+        }
+        
+        console.log('📡 GET Request to:', url);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        console.log('📥 Response status:', response.status);
+
+        if (!response.ok) {
+          throw new Error(`Failed to load interview details (${response.status})`);
+        }
+
+        const data = await response.json();
+        console.log('✅ Received data:', data);
+
+        // Store data
+        candidateData = data;
+
+        // Populate hidden fields with candidate data
+        document.getElementById('hidden_candidate_name').value = data.candidate_name || '';
+        document.getElementById('hidden_candidate_email').value = data.candidate_email || '';
+        
+        // CRITICAL: Populate mode_of_interview and meeting details
+        const modeOfInterview = data.interviewmode || data.communication_mode || data.mode_of_interview || '';
+        const meetingLink = data.meetinglink || data.meeting_link || '';
+        const meetingLocation = data.meetinglocation || data.meeting_location || '';
+        const locationUrl = data.locationurl || data.location_url || '';
+        
+        document.getElementById('hidden_mode_of_interview').value = modeOfInterview;
+        document.getElementById('hidden_meeting_link').value = meetingLink;
+        document.getElementById('hidden_meeting_location').value = meetingLocation;
+        document.getElementById('hidden_location_url').value = locationUrl;
+        
+        console.log('✅ Hidden fields populated with mode_of_interview:', modeOfInterview);
+
+        // Display candidate information
+        displayCandidateData(data);
+
+        // Populate time slots
+        if (data.interview_slots && data.interview_slots.length > 0) {
+          populateTimeSlots(data.interview_slots);
+        } else {
+          throw new Error('No interview slots found in response');
+        }
+
+      } catch (error) {
+        console.error('❌ Error loading data:', error);
+        showError(error.message);
+      }
+    }
+
+    // Display Candidate Information
+    function displayCandidateData(data) {
+      const nameEl = document.getElementById('displayCandidateName');
+      const emailEl = document.getElementById('displayCandidateEmail');
+      const summaryEl = document.getElementById('displaySummary');
+      const modeEl = document.getElementById('displayModeOfInterview');
+
+      if (nameEl) nameEl.textContent = data.candidate_name || '-';
+      if (emailEl) emailEl.textContent = data.candidate_email || '-';
+      if (summaryEl) summaryEl.textContent = data.summary || '-';
+      
+      // Use interviewmode (lowercase) from your API
+      const communicationMode = data.interviewmode || data.communication_mode || data.mode_of_interview || '-';
+      if (modeEl) modeEl.textContent = communicationMode;
+
+      // Show additional details based on communication mode
+      const detailsSection = document.getElementById('interviewDetailsSection');
+      const meetingLinkContainer = document.getElementById('meetingLinkContainer');
+      const meetingLocationContainer = document.getElementById('meetingLocationContainer');
+      const meetingLinkEl = document.getElementById('displayMeetingLink');
+      const meetingLocationEl = document.getElementById('displayMeetingLocation');
+
+      // Use meetinglink (lowercase) from your API
+      const meetingLink = data.meetinglink || data.meeting_link || '';
+      const meetingLocation = data.meetinglocation || data.meeting_location || '';
+      const locationUrl = data.locationurl || data.location_url || '';
+
+      // Check if meeting link exists
+      if (meetingLink && meetingLink.trim() !== '') {
+        if (meetingLinkEl) {
+          meetingLinkEl.href = meetingLink;
+          meetingLinkEl.textContent = 'Click here to join meeting';
+        }
+        if (meetingLinkContainer) meetingLinkContainer.style.display = 'block';
+        if (detailsSection) detailsSection.style.display = 'block';
+      }
+
+      // Check if meeting location exists
+      if (meetingLocation && meetingLocation.trim() !== '') {
+        if (meetingLocationEl) meetingLocationEl.textContent = meetingLocation;
+        if (meetingLocationContainer) meetingLocationContainer.style.display = 'block';
+        if (detailsSection) detailsSection.style.display = 'block';
+      }
+
+      // If location_url exists, make location clickable
+      if (locationUrl && locationUrl.trim() !== '' && meetingLocationEl) {
+        meetingLocationEl.innerHTML = `<a href="${locationUrl}" target="_blank" style="color: #667eea; text-decoration: underline;">${meetingLocation || 'View on map'}</a>`;
+      }
+    }
+
+    // Populate Time Slots
+    function populateTimeSlots(slots) {
+      const container = document.getElementById('slotsContainer');
+      if (!container) return;
+
+      container.innerHTML = '';
+
+      console.log('📅 Populating', slots.length, 'time slots');
+
+      slots.forEach((slot, index) => {
+        const slotDiv = document.createElement('div');
+        slotDiv.className = 'slot-card';
+        
+        // Add unavailable class if needed
+        if (!slot.is_available) {
+          slotDiv.classList.add('unavailable');
+        }
+        
+        // Parse date and time
+        const dateObj = new Date(slot.slot_date + 'T' + slot.slot_time);
+        const formattedDate = dateObj.toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric',
+          weekday: 'short'
+        });
+        const formattedTime = dateObj.toLocaleTimeString('en-US', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: true 
+        });
+
+        slotDiv.innerHTML = `
+          ${!slot.is_available ? '<div class="unavailable-badge">Unavailable</div>' : ''}
+          <div class="slot-number">Slot ${slot.slot_number}</div>
+          <div class="slot-date">${formattedDate}</div>
+          <div class="slot-time">${formattedTime}</div>
+          <label class="checkbox-label">
+            <input type="radio" class="slot-checkbox" name="selected_slot" value="${slot.slot_number}" 
+                   data-slot-number="${slot.slot_number}"
+                   data-slot-date="${slot.slot_date}" 
+                   data-slot-time="${slot.slot_time}"
+                   ${!slot.is_available ? 'disabled' : ''}>
+            <span class="checkbox-text">${slot.is_available ? 'Select this slot' : 'Already booked'}</span>
+          </label>
+        `;
+
+        // Add click handler only for available slots
+        if (slot.is_available) {
+          slotDiv.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'INPUT') {
+              const radio = this.querySelector('input[type="radio"]');
+              if (radio && !radio.disabled) radio.click();
+            }
+            toggleSlot(this, slot);
+          });
+        }
+
+        container.appendChild(slotDiv);
+      });
+    }
+
+    // Toggle Slot Selection
+    function toggleSlot(slotElement, slot) {
+      // Remove selected class from all slots
+      document.querySelectorAll('.slot-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+
+      // Add selected class to clicked slot
+      slotElement.classList.add('selected');
+
+      // Check the radio button
+      const radio = slotElement.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+
+      // Update selected slot
+      selectedSlot = {
+        slot_number: slot.slot_number,
+        slot_date: slot.slot_date,
+        slot_time: slot.slot_time
+      };
+
+      // CRITICAL: Update hidden fields with selected slot data
+      document.getElementById('hidden_slot_number').value = slot.slot_number;
+      document.getElementById('hidden_slot_date').value = slot.slot_date;
+      document.getElementById('hidden_slot_time').value = slot.slot_time;
+
+      console.log('✅ Slot selected:', selectedSlot);
+      console.log('✅ Hidden fields updated');
+      updateSelectedSlotDisplay(slot);
+    }
+
+    // Update Selected Slot Display
+    function updateSelectedSlotDisplay(slot) {
+      const dateObj = new Date(slot.slot_date + 'T' + slot.slot_time);
+      const formattedDate = dateObj.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        weekday: 'short'
+      });
+      const formattedTime = dateObj.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      });
+
+      const text = `Selected: ${formattedDate} at ${formattedTime}`;
+      const textEl = document.getElementById('selectedSlotText');
+      const displayEl = document.getElementById('selectedSlotDisplay');
+      
+      if (textEl) textEl.textContent = text;
+      if (displayEl) displayEl.classList.add('show');
+    }
+
+    // Phone number validation
+    const phoneInput = document.getElementById('phone_number');
+    const phoneError = document.getElementById('phoneError');
+
+    if (phoneInput) {
+      // Only allow digits
+      phoneInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '');
+        validatePhone();
+      });
+
+      phoneInput.addEventListener('blur', validatePhone);
+    }
+
+    function validatePhone() {
+      const value = phoneInput.value;
+      const isValid = /^[0-9]{10}$/.test(value);
+
+      if (value.length > 0 && !isValid) {
+        phoneInput.style.borderColor = '#d32f2f';
+        if (phoneError) phoneError.style.display = 'block';
+        return false;
+      } else {
+        phoneInput.style.borderColor = '#ccc';
+        if (phoneError) phoneError.style.display = 'none';
+        return true;
+      }
+    }
+
+    // Handle Form Submission - Let wowflo.io handle it naturally
+    const form = document.getElementById('candidateResponseForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        // Validate slot selection before allowing submission
+        if (!selectedSlot) {
+          e.preventDefault();
+          alert('Please select an interview slot before submitting');
+          return false;
+        }
+
+        // Validate phone number
+        const phoneValue = phoneInput.value;
+        if (!/^[0-9]{10}$/.test(phoneValue)) {
+          e.preventDefault();
+          alert('Please enter a valid 10-digit phone number');
+          validatePhone(); // Show error message
+          return false;
+        }
+
+        // Log what will be submitted
+        const formData = new FormData(form);
+        console.log('📤 Form submission data:');
+        for (let [key, value] of formData.entries()) {
+          console.log(`  ${key}: ${value}`);
+        }
+
+        // Let the form submit naturally - wowflo.io will handle it
+        console.log('✅ Form will now submit to wowflo.io');
+      });
+    }
+
+    // Show error message
+    function showError(message) {
+      const nameEl = document.getElementById('displayCandidateName');
+      const emailEl = document.getElementById('displayCandidateEmail');
+      const summaryEl = document.getElementById('displaySummary');
+      const containerEl = document.getElementById('slotsContainer');
+
+      if (nameEl) nameEl.textContent = 'Error loading data';
+      if (emailEl) emailEl.textContent = '-';
+      if (summaryEl) summaryEl.textContent = message;
+      if (containerEl) {
+        containerEl.innerHTML = `
+          <div style="grid-column: 1/-1; text-align: center; padding: 20px; color: #e74c3c;">
+            ❌ ${message}
+          </div>
+        `;
+      }
+    }
+
+    console.log('%c📅 Candidate Interview Response Form Ready', 'color: #667eea; font-size: 16px; font-weight: bold;');
+  </script>
+</body>
+</html>

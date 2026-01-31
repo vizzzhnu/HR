@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR Interview Scheduling</title>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 950px;
+      margin: auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.2);
+    }
+    h1 { 
+      text-align: center; 
+      margin-bottom: 5px;
+      color: #333;
+      font-size: 2.2rem;
+    }
+    .subtitle { 
+      text-align: center; 
+      color: #666; 
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .section-title {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 30px 0 20px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    label { 
+      font-weight: bold; 
+      margin-bottom: 8px; 
+      display: block;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background: #fff;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    textarea { 
+      min-height: 90px; 
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .candidate-block {
+      border: 2px dashed #ddd;
+      padding: 25px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+
+    .candidate-block:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+    }
+
+    .candidate-block h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #667eea;
+      font-size: 1.3rem;
+    }
+
+    .time-slots {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .slot {
+      border: 2px solid #e0e0e0;
+      padding: 18px;
+      border-radius: 10px;
+      background: #fafafa;
+      transition: all 0.3s ease;
+    }
+
+    .slot:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+    }
+
+    .slot label {
+      color: #667eea;
+      font-size: 1rem;
+    }
+
+    .time-range {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 15px;
+      align-items: end;
+    }
+
+    .duration-display {
+      background: #e7f3ff;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 2px solid #2196F3;
+      font-weight: bold;
+      color: #0c5bb4;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    /* Communication Mode Styling */
+    .communication-container {
+      background: linear-gradient(135deg, #f5f7ff, #ffffff);
+      border: 2px solid #e0e7ff;
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .communication-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.05rem;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .communication-label::before {
+      content: "💬";
+      font-size: 1.5rem;
+    }
+
+    select#communication_mode {
+      padding: 14px 15px;
+      font-size: 15px;
+      border: 2px solid #d0d0d0;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    select#communication_mode:hover {
+      border-color: #667eea;
+      background: #f5f7ff;
+    }
+
+    select#communication_mode option {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .info-text {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    /* Meeting Link Note */
+    .meeting-note {
+      background: #e3f2fd;
+      border: 2px solid #2196F3;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .meeting-note.show {
+      display: block;
+    }
+
+    .meeting-note p {
+      margin: 0;
+      color: #0d47a1;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Default Location Display */
+    .default-location {
+      background: #e8f5e9;
+      border: 2px solid #4caf50;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .default-location h4 {
+      margin: 0 0 10px 0;
+      color: #2e7d32;
+      font-size: 1.1rem;
+    }
+
+    .default-location p {
+      margin: 8px 0;
+      color: #1b5e20;
+      line-height: 1.6;
+    }
+
+    .default-location a {
+      color: #1976d2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .default-location a:hover {
+      text-decoration: underline;
+    }
+
+    .error-message {
+      color: #d32f2f;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+    }
+
+    input.error-input {
+      border-color: #d32f2f !important;
+    }
+
+    button {
+      padding: 14px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-add { 
+      background: #0d6efd; 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+    }
+    
+    .btn-add:hover {
+      background: #0b5ed7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(13, 110, 253, 0.4);
+    }
+
+    .btn-submit { 
+      background: #28a745; 
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-submit:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+    }
+
+    .btn-reset { 
+      background: #6c757d; 
+      color: #fff;
+    }
+
+    .btn-reset:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 35px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .loader { 
+      display: none; 
+      text-align: center; 
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #667eea;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    
+    .loader.show { display: block; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .success, .error {
+      display: none;
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success { 
+      background: #d4edda; 
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+    
+    .error { 
+      background: #f8d7da; 
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    .link-box {
+      background: #fff;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+      border: 1px solid #ddd;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 25px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .time-slots {
+        grid-template-columns: 1fr;
+      }
+
+      .time-range {
+        grid-template-columns: 1fr;
+      }
+
+      .buttons {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <h1>📅 HR Interview Scheduling</h1>
+  <p class="subtitle">Multiple candidates · Single execution ID</p>
+
+  <form id="hrForm">
+
+    <!-- Execution ID and Email -->
+    <div class="section-title">🔑 Execution Details</div>
+    <div class="form-row">
+      <div>
+        <label>Execution ID</label>
+        <input type="text" id="executionId" name="executionId" required placeholder="e.g., 6804 or INT_JAN_2025" />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" id="email" name="email" required placeholder="e.g., hr@company.com" />
+      </div>
+    </div>
+    <p class="info-text">These fields can be auto-populated from URL or entered manually</p>
+    
+    <script>
+      // Immediate URL parameter extraction - runs as soon as this part of HTML is parsed
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const executionId = urlParams.get('executionId') || urlParams.get('execution_id') || '';
+        const email = urlParams.get('email') || '';
+        
+        const executionIdField = document.getElementById('executionId');
+        const emailField = document.getElementById('email');
+        
+        if (executionIdField && executionId) {
+          executionIdField.value = executionId;
+        }
+        if (emailField && email) {
+          emailField.value = email;
+        }
+      })();
+    </script>
+
+    <!-- Candidates -->
+    <div class="section-title">👤 Candidates</div>
+
+    <div id="candidatesContainer">
+      <div class="candidate-block">
+        <h3>Candidate 1</h3>
+
+        <div class="form-row">
+          <div>
+            <label>Name</label>
+            <input type="text" name="candidate_name[]" required />
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" name="candidate_email[]" required />
+          </div>
+        </div>
+
+        <label>Summary</label>
+        <textarea name="summary[]" required></textarea>
+      </div>
+    </div>
+
+    <button type="button" class="btn-add" onclick="addCandidate()">➕ Add Candidate</button>
+
+    <!-- Slots -->
+    <div class="section-title">🕐 Interview Slots</div>
+
+    <div class="time-slots">
+      <div class="slot">
+        <label>Slot 1</label>
+        <div class="form-row" style="margin-bottom: 10px;">
+          <div>
+            <label style="font-size: 0.85rem;">Date</label>
+            <input type="date" name="slot_1_date" required onchange="checkDuplicateSlots()" />
+          </div>
+        </div>
+        <div class="time-range">
+          <div>
+            <label style="font-size: 0.85rem;">From Time</label>
+            <input type="time" name="slot_1_from" required onchange="calculateDuration(1)" />
+          </div>
+          <div>
+            <label style="font-size: 0.85rem;">To Time</label>
+            <input type="time" name="slot_1_to" required onchange="calculateDuration(1)" />
+          </div>
+          <div class="duration-display" id="duration_1">-- mins</div>
+        </div>
+      </div>
+
+      <div class="slot">
+        <label>Slot 2</label>
+        <div class="form-row" style="margin-bottom: 10px;">
+          <div>
+            <label style="font-size: 0.85rem;">Date</label>
+            <input type="date" name="slot_2_date" required onchange="checkDuplicateSlots()" />
+          </div>
+        </div>
+        <div class="time-range">
+          <div>
+            <label style="font-size: 0.85rem;">From Time</label>
+            <input type="time" name="slot_2_from" required onchange="calculateDuration(2)" />
+          </div>
+          <div>
+            <label style="font-size: 0.85rem;">To Time</label>
+            <input type="time" name="slot_2_to" required onchange="calculateDuration(2)" />
+          </div>
+          <div class="duration-display" id="duration_2">-- mins</div>
+        </div>
+      </div>
+
+      <div class="slot">
+        <label>Slot 3</label>
+        <div class="form-row" style="margin-bottom: 10px;">
+          <div>
+            <label style="font-size: 0.85rem;">Date</label>
+            <input type="date" name="slot_3_date" required onchange="checkDuplicateSlots()" />
+          </div>
+        </div>
+        <div class="time-range">
+          <div>
+            <label style="font-size: 0.85rem;">From Time</label>
+            <input type="time" name="slot_3_from" required onchange="calculateDuration(3)" />
+          </div>
+          <div>
+            <label style="font-size: 0.85rem;">To Time</label>
+            <input type="time" name="slot_3_to" required onchange="calculateDuration(3)" />
+          </div>
+          <div class="duration-display" id="duration_3">-- mins</div>
+        </div>
+      </div>
+
+      <div class="slot">
+        <label>Slot 4</label>
+        <div class="form-row" style="margin-bottom: 10px;">
+          <div>
+            <label style="font-size: 0.85rem;">Date</label>
+            <input type="date" name="slot_4_date" required onchange="checkDuplicateSlots()" />
+          </div>
+        </div>
+        <div class="time-range">
+          <div>
+            <label style="font-size: 0.85rem;">From Time</label>
+            <input type="time" name="slot_4_from" required onchange="calculateDuration(4)" />
+          </div>
+          <div>
+            <label style="font-size: 0.85rem;">To Time</label>
+            <input type="time" name="slot_4_to" required onchange="calculateDuration(4)" />
+          </div>
+          <div class="duration-display" id="duration_4">-- mins</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duplicate Warning -->
+    <div id="duplicateWarning" style="display: none; background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin-top: 20px; color: #856404;">
+    </div>
+
+    <!-- Communication Preferences -->
+    <div class="section-title">💬 Communication Preferences</div>
+    
+    <div class="communication-container">
+      <label class="communication-label">
+        Preferred Communication Mode
+      </label>
+      <select name="communication_mode" id="communication_mode" required onchange="toggleCommunicationFields()">
+        <option value="">-- Select Communication Mode --</option>
+        <option value="Phone">📞 Phone Call</option>
+        <option value="Video">🎥 Video Call</option>
+        <option value="In-Person" selected>🤝 In-Person Meeting</option>
+      </select>
+      <p class="info-text">Choose how you'd prefer to conduct the interviews with candidates</p>
+      
+      <!-- Meeting Link Note (For Video Calls) -->
+      <div class="meeting-note" id="meetingNote">
+        <p>
+          <span style="font-size: 1.3rem;">📝</span>
+          <strong>Note:</strong> Video meeting link will be added later
+        </p>
+      </div>
+
+      <!-- Default Location Display (For In-Person Meetings) -->
+      <div class="default-location" id="defaultLocation">
+        <h4>📍 Default Meeting Location</h4>
+        <p><strong>Address:</strong><br>7th Floor, VBC Solitaire Building<br>Rama Kamath Puram, T. Nagar<br>Chennai, Tamil Nadu 600017</p>
+        <p><strong>Map Link:</strong> <a href="https://maps.app.goo.gl/u6S3s47H1M6WJJgS7" target="_blank">View on Google Maps</a></p>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="buttons">
+      <button type="reset" class="btn-reset">🔄 Reset</button>
+      <button type="submit" class="btn-submit">✅ Submit</button>
+    </div>
+
+    <div class="loader" id="loader">⏳ Processing...</div>
+
+    <div class="success" id="success"></div>
+    <div class="error" id="error"></div>
+
+  </form>
+</div>
+
+<script>
+/* ================= CONFIG ================= */
+const N8N_WEBHOOK_URL = "https://n8n.wowflo.io/webhook/interview_schedule";
+const CANDIDATE_FORM_URL = "https://yoursite.com/candidate_response_form.html";
+
+// Default location constants
+const DEFAULT_LOCATION = "7th Floor, VBC Solitaire Building, Rama Kamath Puram, T. Nagar, Chennai, Tamil Nadu 600017";
+const DEFAULT_LOCATION_URL = "https://maps.app.goo.gl/u6S3s47H1M6WJJgS7";
+
+/* ============== INITIALIZE URL PARAMETERS ============== */
+function initializeURLParams() {
+  const urlParams = new URLSearchParams(window.location.search);
+  
+  // Get parameters from URL
+  const executionId = urlParams.get('executionId') || urlParams.get('execution_id') || '';
+  const email = urlParams.get('email') || '';
+  const type = urlParams.get('type') || 'hr';
+  
+  console.log('URL Parameters:', { executionId, email, type });
+  console.log('Full URL:', window.location.href);
+  
+  // Populate form fields - with null checks
+  const executionIdField = document.getElementById('executionId');
+  const emailField = document.getElementById('email');
+  
+  if (executionIdField && executionId) {
+    executionIdField.value = executionId;
+    console.log('Set executionId field to:', executionId);
+  }
+  
+  if (emailField && email) {
+    emailField.value = email;
+    console.log('Set email field to:', email);
+  }
+  
+  // Store type for submission
+  const form = document.getElementById('hrForm');
+  if (form) {
+    form.dataset.type = type;
+  }
+}
+
+// Run immediately when script loads
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeURLParams);
+} else {
+  // DOM already loaded, run immediately
+  initializeURLParams();
+}
+
+/* ============== DATE INPUT FORMATTING ============== */
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize URL parameters (only if not already done)
+  if (!document.getElementById('executionId').value) {
+    initializeURLParams();
+  }
+
+  // Set default communication mode to In-Person
+  toggleCommunicationFields();
+});
+
+/* ============== CALCULATE DURATION ============== */
+function calculateDuration(slotNumber) {
+  const fromTime = document.querySelector(`input[name="slot_${slotNumber}_from"]`).value;
+  const toTime = document.querySelector(`input[name="slot_${slotNumber}_to"]`).value;
+  const durationDisplay = document.getElementById(`duration_${slotNumber}`);
+  
+  if (fromTime && toTime) {
+    const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+    const [toHours, toMinutes] = toTime.split(':').map(Number);
+    
+    const fromTotalMinutes = fromHours * 60 + fromMinutes;
+    const toTotalMinutes = toHours * 60 + toMinutes;
+    
+    const duration = toTotalMinutes - fromTotalMinutes;
+    
+    if (duration > 0) {
+      durationDisplay.textContent = `${duration} mins`;
+      durationDisplay.style.background = '#d4edda';
+      durationDisplay.style.color = '#155724';
+      durationDisplay.style.borderColor = '#c3e6cb';
+    } else {
+      durationDisplay.textContent = 'Invalid';
+      durationDisplay.style.background = '#f8d7da';
+      durationDisplay.style.color = '#721c24';
+      durationDisplay.style.borderColor = '#f5c6cb';
+    }
+  }
+  
+  // Check for duplicates after updating
+  checkDuplicateSlots();
+}
+
+/* ============== CHECK DUPLICATE SLOTS ============== */
+function checkDuplicateSlots() {
+  const slots = [];
+  const duplicateWarning = document.getElementById('duplicateWarning');
+  
+  if (!duplicateWarning) {
+    console.error('duplicateWarning element not found');
+    return true;
+  }
+  
+  // Reset all slot borders first
+  for (let i = 1; i <= 4; i++) {
+    const slotDiv = document.querySelector(`.slot:nth-of-type(${i})`);
+    if (slotDiv) {
+      slotDiv.style.border = '2px solid #e0e0e0';
+      slotDiv.style.background = '#fafafa';
+    }
+  }
+  
+  // Collect all slot data
+  for (let i = 1; i <= 4; i++) {
+    const dateInput = document.querySelector(`input[name="slot_${i}_date"]`);
+    const fromTimeInput = document.querySelector(`input[name="slot_${i}_from"]`);
+    const toTimeInput = document.querySelector(`input[name="slot_${i}_to"]`);
+    
+    if (!dateInput || !fromTimeInput || !toTimeInput) continue;
+    
+    const date = dateInput.value;
+    const fromTime = fromTimeInput.value;
+    const toTime = toTimeInput.value;
+    
+    if (date && fromTime && toTime) {
+      // Convert times to minutes for easier comparison
+      const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+      const [toHours, toMinutes] = toTime.split(':').map(Number);
+      const fromTotalMinutes = fromHours * 60 + fromMinutes;
+      const toTotalMinutes = toHours * 60 + toMinutes;
+      
+      slots.push({
+        slotNumber: i,
+        date: date,
+        fromTime: fromTime,
+        toTime: toTime,
+        fromMinutes: fromTotalMinutes,
+        toMinutes: toTotalMinutes
+      });
+    }
+  }
+  
+  // Check for overlaps
+  const overlappingSlots = new Set();
+  
+  for (let i = 0; i < slots.length; i++) {
+    for (let j = i + 1; j < slots.length; j++) {
+      const slot1 = slots[i];
+      const slot2 = slots[j];
+      
+      // Only check if same date
+      if (slot1.date === slot2.date) {
+        // Check if times overlap
+        // Overlap occurs if: slot1.start < slot2.end AND slot2.start < slot1.end
+        if (slot1.fromMinutes < slot2.toMinutes && slot2.fromMinutes < slot1.toMinutes) {
+          overlappingSlots.add(slot1.slotNumber);
+          overlappingSlots.add(slot2.slotNumber);
+        }
+      }
+    }
+  }
+  
+  // Show/hide warning
+  if (overlappingSlots.size > 0) {
+    const slotNumbersArray = Array.from(overlappingSlots).sort((a, b) => a - b);
+    const slotNumbers = slotNumbersArray.map(n => `Slot ${n}`).join(', ');
+    
+    // Highlight overlapping slots
+    overlappingSlots.forEach(slotNum => {
+      const slotDiv = document.querySelector(`.slot:nth-of-type(${slotNum})`);
+      if (slotDiv) {
+        slotDiv.style.border = '3px solid #ff6b6b';
+        slotDiv.style.background = '#ffe0e0';
+      }
+    });
+    
+    // Get details of first overlap for display
+    const firstOverlap = slots.find(s => overlappingSlots.has(s.slotNumber));
+    const dateStr = firstOverlap ? firstOverlap.date : '';
+    
+    duplicateWarning.innerHTML = `⚠️ <strong>Time Overlap Detected!</strong><br>
+      <strong>${slotNumbers}</strong> have overlapping times on <strong>${dateStr}</strong><br>
+      Interview slots cannot overlap for the same execution ID. Please adjust the times.`;
+    duplicateWarning.style.display = 'block';
+    
+    console.log('Overlapping slots found:', Array.from(overlappingSlots));
+    return false;
+  } else {
+    duplicateWarning.style.display = 'none';
+    return true;
+  }
+}
+
+/* ============== TOGGLE COMMUNICATION FIELDS ============== */
+function toggleCommunicationFields() {
+  const commMode = document.getElementById("communication_mode").value;
+  const meetingNote = document.getElementById("meetingNote");
+  const defaultLocation = document.getElementById("defaultLocation");
+  
+  // Reset all fields
+  meetingNote.classList.remove("show");
+  defaultLocation.style.display = "none";
+  
+  // Show appropriate fields based on selection
+  if (commMode === "Video") {
+    meetingNote.classList.add("show");
+  } else if (commMode === "In-Person") {
+    defaultLocation.style.display = "block";
+  }
+}
+
+/* ============== ADD CANDIDATE ============== */
+let count = 1;
+function addCandidate() {
+  count++;
+  const div = document.createElement("div");
+  div.className = "candidate-block";
+  div.innerHTML = `
+    <h3>Candidate ${count}</h3>
+    <div class="form-row">
+      <div>
+        <label>Name</label>
+        <input type="text" name="candidate_name[]" required />
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="candidate_email[]" required />
+      </div>
+    </div>
+    <label>Summary</label>
+    <textarea name="summary[]" required></textarea>
+  `;
+  document.getElementById("candidatesContainer").appendChild(div);
+}
+
+/* ============== FORM SUBMIT ============== */
+document.getElementById("hrForm").addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const loader = document.getElementById("loader");
+  const success = document.getElementById("success");
+  const error = document.getElementById("error");
+
+  // Check for duplicate slots before submission
+  if (!checkDuplicateSlots()) {
+    error.textContent = "❌ Please fix time overlaps before submitting.";
+    error.style.display = "block";
+    // Scroll to duplicate warning
+    document.getElementById('duplicateWarning').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  loader.classList.add("show");
+  success.style.display = error.style.display = "none";
+
+  try {
+    const fd = new FormData(e.target);
+    const data = {};
+
+    fd.forEach((v,k)=>{
+      if(k.endsWith("[]")){
+        const key = k.replace("[]","");
+        data[key] = data[key] || [];
+        data[key].push(v);
+      } else data[k] = v;
+    });
+
+    // Parse slots with date format from date picker (YYYY-MM-DD) and convert to DD/MM/YYYY
+    const slots = [1,2,3,4].map(i => {
+      const dateValue = data[`slot_${i}_date`]; // Format: YYYY-MM-DD
+      const fromTime = data[`slot_${i}_from`];
+      const toTime = data[`slot_${i}_to`];
+      
+      // Convert YYYY-MM-DD to DD/MM/YYYY for display
+      let formattedDate = dateValue;
+      if (dateValue && dateValue.includes('-')) {
+        const [year, month, day] = dateValue.split('-');
+        formattedDate = `${day}/${month}/${year}`;
+      }
+      
+      // Calculate duration
+      const [fromHours, fromMinutes] = fromTime.split(':').map(Number);
+      const [toHours, toMinutes] = toTime.split(':').map(Number);
+      const duration = (toHours * 60 + toMinutes) - (fromHours * 60 + fromMinutes);
+      
+      return { 
+        slot: i, 
+        date: formattedDate,
+        date_raw: dateValue, // Keep original format for backend
+        from_time: fromTime,
+        to_time: toTime,
+        duration_minutes: duration
+      };
+    });
+
+    const candidates = data.candidate_name.map((_,i)=>({
+      name: data.candidate_name[i],
+      email: data.candidate_email[i],
+      summary: data.summary[i],
+      link: `${CANDIDATE_FORM_URL}?executionId=${data.executionId}&candidate=${i+1}`
+    }));
+
+    const payload = {
+      executionId: data.executionId,
+      email: data.email,
+      type: document.getElementById('hrForm').dataset.type || 'hr',
+      slots,
+      candidates,
+      communication_mode: data.communication_mode,
+      meeting_link: null, // Will be added later
+      meeting_location: data.communication_mode === "In-Person" ? DEFAULT_LOCATION : null,
+      location_url: data.communication_mode === "In-Person" ? DEFAULT_LOCATION_URL : null,
+      submitted_at: new Date().toISOString()
+    };
+
+    console.log('Payload:', JSON.stringify(payload, null, 2));
+
+    const response = await fetch(N8N_WEBHOOK_URL,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    // Build success message
+    let successMsg = `<strong>✅ Submitted Successfully</strong><br><br>` +
+      `<strong>Execution ID:</strong> ${data.executionId}<br>` +
+      `<strong>Email:</strong> ${data.email}<br>` +
+      `<strong>Type:</strong> ${document.getElementById('hrForm').dataset.type || 'hr'}<br>` +
+      `<strong>Communication Mode:</strong> ${data.communication_mode}<br>`;
+    
+    // Add note if Video Call is selected
+    if (data.communication_mode === "Video") {
+      successMsg += `<strong>Meeting Link:</strong> Will be added later<br>`;
+    }
+    
+    // Add location info if In-Person is selected
+    if (data.communication_mode === "In-Person") {
+      successMsg += `<strong>Location:</strong> ${DEFAULT_LOCATION}<br>`;
+      successMsg += `<strong>Map Link:</strong> <a href="${DEFAULT_LOCATION_URL}" target="_blank" style="color: #28a745; text-decoration: underline;">View on Google Maps</a><br>`;
+    }
+    
+    successMsg += `<br><strong>Interview Slots:</strong><br>`;
+    slots.forEach(slot => {
+      successMsg += `Slot ${slot.slot}: ${slot.date} (${slot.from_time} - ${slot.to_time}, ${slot.duration_minutes} mins)<br>`;
+    });
+    
+    successMsg += `<br><strong>Candidate Links:</strong><br>` +
+      candidates.map(c=>`
+        ${c.name} → 
+        <div class="link-box">${c.link}</div>
+      `).join("");
+
+    success.innerHTML = successMsg;
+    success.style.display = "block";
+    
+    // Don't reset form - keep URL params intact
+    // Just clear candidate and slot data
+    document.querySelectorAll('input[name="candidate_name[]"], input[name="candidate_email[]"], textarea[name="summary[]"]').forEach(el => el.value = '');
+    document.querySelectorAll('input[type="date"], input[type="time"]').forEach(el => el.value = '');
+    
+    // Reset duration displays
+    for(let i = 1; i <= 4; i++) {
+      document.getElementById(`duration_${i}`).textContent = '-- mins';
+      document.getElementById(`duration_${i}`).style.background = '#e7f3ff';
+      document.getElementById(`duration_${i}`).style.color = '#0c5bb4';
+      document.getElementById(`duration_${i}`).style.borderColor = '#2196F3';
+    }
+    
+    // Remove extra candidate blocks if any
+    const candidateBlocks = document.querySelectorAll('.candidate-block');
+    for(let i = 1; i < candidateBlocks.length; i++) {
+      candidateBlocks[i].remove();
+    }
+    count = 1;
+
+  } catch(err) {
+    error.textContent = "❌ Submission failed: " + err.message;
+    error.style.display = "block";
+  } finally {
+    loader.classList.remove("show");
+  }
+});
+</script>
+</body>
+</html>
