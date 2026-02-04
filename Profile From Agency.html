@@ -3,397 +3,1047 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agency Candidate Submission</title>
+<title>Candidate Submission</title>
+<!-- <style>
+/*   * { box-sizing: border-box; } */
+ body { 
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+   background: #f4f6f8; 
+   margin: 0; 
+   padding: 0;
+   font-size: 15px;
+   line-height: 1.6;
+   color: #333;
+ }
+  .container { width: 100%; min-height: 100vh; padding: 40px; background: linear-gradient(to right, #f7f5f4, #eef0f5); }
+  .form-wrapper { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); max-width: 1300px; margin: 0 auto; }
+  
+  .logo-container { display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 2px solid #e0e0e0; justify-content: center; }
+  .logo-container img { max-height: 60px; width: auto; object-fit: contain; transition: transform 0.3s ease; }
+  
+  h2 { 
+  text-align: center; 
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin: 0 0 25px 0; 
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+  label { 
+    display: block; 
+    font-weight: 600; 
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    letter-spacing: 0.3px;
+  }
+  input, select, textarea { 
+    width: 100%; 
+    padding: 12px 14px; 
+    margin-top: 6px; 
+    border: 2px solid #e0e0e0; 
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  .info-box { background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.95rem; }
+  .info-box strong { font-size: 1.05rem; font-weight: 700; }
+  
+  .submission-type-section { background: #fff3e0; border: 2px solid #ff9800; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .submission-type-section h3 { margin-top: 0; color: #e65100; font-size: 1.25rem; font-weight: 700; }
+  
+  .import-section { background: #e8f4f8; border: 2px dashed #4a90e2; border-radius: 12px; padding: 25px; margin-bottom: 25px; text-align: center; }
+  .import-section h3 { margin-top: 0; color: #2c5aa0; font-size: 1.25rem; font-weight: 700; }
+  .import-btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
+  
+  .submitter-details { background: #f0f8ff; border: 2px solid #4a90e2; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+  .submitter-details h3 { margin-top: 0; color: #2c5aa0; font-size: 1.25rem; font-weight: 700; }
+  
+  .btn { 
+    padding: 13px 28px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 1rem;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  .btn-green { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); }
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4); }
+  .btn-blue { background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); color: white; box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); }
+  .btn-blue:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4); }
+  #fileInput { display: none; }
+  
+  .candidate-section { border: 2px solid #d0d0d0; border-radius: 12px; padding: 25px; margin-top: 25px; background: #fafafa; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .candidate-section h3 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #667eea; padding-bottom: 10px; font-size: 1.2rem; font-weight: 700; }
+  .form-row { display: flex; flex-wrap: wrap; gap: 20px; }
+  .form-group { flex: 1; min-width: 250px; }
+  
+  .upload-box { border: 2px dashed #aaa; padding: 15px; text-align: center; background: #fff; border-radius: 8px; margin-top: 5px; }
+  .resume-info { margin-top: 10px; font-size: 0.85rem; color: #666; }
+  
+  .delete-btn { 
+    position: absolute; 
+    right: 15px; 
+    top: 15px; 
+    background: linear-gradient(135deg, #ff4d4d 0%, #e63939 100%); 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 8px 16px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(255, 77, 77, 0.3);
+    transition: all 0.3s;
+  }
+  .delete-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4); }
+  
+  .add-btn { 
+    margin-top: 25px; 
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); 
+    color: white; 
+    border: none; 
+    padding: 14px 30px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s;
+  }
+  .add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4); }
+  
+  .submit-btn { 
+    margin-top: 25px; 
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%); 
+    color: white; 
+    border: none; 
+    padding: 16px 40px; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 1.1rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+  
+  .success, .error { padding: 16px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: 600; font-size: 1rem; }
+  .success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+  .error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
+  .hidden { display: none; }
+  
+  .loader { display: none; text-align: center; margin-top: 20px; }
+  .loader.active { display: block; }
+  .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  
+  @media (max-width: 768px) { 
+    .logo-container { flex-wrap: wrap; gap: 10px; }
+    .logo-container img { max-height: 45px; }
+    .form-row { flex-direction: column; }
+    h2 { font-size: 1.5rem; padding: 16px 15px; }
+    h3 { font-size: 1.1rem; }
+    label { font-size: 0.9rem; }
+    input, select, textarea { font-size: 0.9rem; padding: 10px 12px; }
+    .btn { padding: 12px 24px; font-size: 0.85rem; }
+    .submit-btn { padding: 14px 32px; font-size: 1rem; }
+  }
+</style> -->
 <style>
   * { box-sizing: border-box; }
-  body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; }
-  .container { width: 100%; min-height: 100vh; padding: 40px; background: linear-gradient(to right, #f7f5f4, #eef0f5); }
-  .form-wrapper { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); max-width: 1300px; margin: 0 auto; }
-  h2 { text-align: center; background: #6a86dc; color: white; padding: 15px; border-radius: 10px; margin: 0 0 20px 0; font-size: 1.5rem; }
-  .info-box { background: #e7f3ff; border-left: 4px solid #2196F3; padding: 15px; margin-bottom: 20px; border-radius: 4px; font-size: 0.9rem; }
-  .import-section { background: #e8f4f8; border: 2px dashed #4a90e2; border-radius: 12px; padding: 25px; margin-bottom: 25px; text-align: center; }
-  .import-section h3 { margin-top: 0; color: #2c5aa0; }
+  
+  body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: #f4f6f8; 
+    margin: 0; 
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .container { 
+    width: 100%; 
+    min-height: 100vh; 
+    padding: 40px; 
+    background: linear-gradient(to right, #f7f5f4, #eef0f5); 
+  }
+
+  .form-wrapper { 
+    background: white; 
+    border-radius: 16px; 
+    padding: 35px; 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15); 
+    max-width: 1300px; 
+    margin: 0 auto; 
+  }
+  
+  .logo-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 25px; 
+    padding-bottom: 20px; 
+    border-bottom: 2px solid #e0e0e0; 
+    justify-content: center; 
+  }
+
+  .logo-container img { 
+    max-height: 60px; 
+    width: auto; 
+    object-fit: contain; 
+    transition: transform 0.3s ease; 
+  }
+  
+  h2 { 
+    text-align: center; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    padding: 20px; 
+    border-radius: 12px; 
+    margin: 0 0 25px 0; 
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+
+  label { 
+    display: block; 
+    font-weight: 600; 
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    letter-spacing: 0.3px;
+  }
+
+  input, select, textarea { 
+    width: 100%; 
+    padding: 12px 14px; 
+    margin-top: 6px; 
+    border: 2px solid #e0e0e0; 
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+  
+  .info-box { 
+    background: #e7f3ff; 
+    border-left: 4px solid #2196F3; 
+    padding: 15px; 
+    margin-bottom: 20px; 
+    border-radius: 4px; 
+    font-size: 0.95rem; 
+  }
+
+  .info-box strong { font-size: 1.05rem; font-weight: 700; }
+  
+  .submission-type-section { 
+    background: #fff3e0; 
+    border: 2px solid #ff9800; 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 25px; 
+  }
+
+  .submission-type-section h3 { margin-top: 0; color: #e65100; font-size: 1.25rem; font-weight: 700; }
+  
+  .import-section { 
+    background: #e8f4f8; 
+    border: 2px dashed #4a90e2; 
+    border-radius: 12px; 
+    padding: 25px; 
+    margin-bottom: 25px; 
+    text-align: center; 
+  }
+
+  .import-section h3 { margin-top: 0; color: #2c5aa0; font-size: 1.25rem; font-weight: 700; }
   .import-btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 15px; }
-  .btn { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s; }
-  .btn-green { background: #28a745; color: white; }
-  .btn-blue { background: #4a90e2; color: white; }
-  .btn:hover { transform: translateY(-2px); }
+  
+  .submitter-details { 
+    background: #f0f8ff; 
+    border: 2px solid #4a90e2; 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 25px; 
+  }
+
+  .submitter-details h3 { margin-top: 0; color: #2c5aa0; font-size: 1.25rem; font-weight: 700; }
+  
+  .btn { 
+    padding: 13px 28px; 
+    border: none; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  .btn-green { 
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%); 
+    color: white; 
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3); 
+  }
+
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4); }
+
+  .btn-blue { 
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); 
+    color: white; 
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3); 
+  }
+
+  .btn-blue:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4); }
+
   #fileInput { display: none; }
-  .candidate-section { border: 2px solid #ccc; border-radius: 12px; padding: 25px; margin-top: 25px; background: #fafafa; position: relative; }
-  .candidate-section h3 { margin-top: 0; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 8px; }
+  
+  .candidate-section { 
+    border: 2px solid #d0d0d0; 
+    border-radius: 12px; 
+    padding: 25px; 
+    margin-top: 25px; 
+    background: #fafafa; 
+    position: relative; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+  }
+
+  .candidate-section h3 { 
+    margin-top: 0; 
+    color: #2c3e50; 
+    border-bottom: 2px solid #667eea; 
+    padding-bottom: 10px; 
+    font-size: 1.2rem; 
+    font-weight: 700; 
+  }
+
   .form-row { display: flex; flex-wrap: wrap; gap: 20px; }
   .form-group { flex: 1; min-width: 250px; }
-  label { display: block; font-weight: bold; margin-top: 10px; }
-  input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 6px; }
-  .upload-box { border: 2px dashed #aaa; padding: 15px; text-align: center; background: #fff; border-radius: 8px; margin-top: 5px; }
+  
+  .upload-box { 
+    border: 2px dashed #aaa; 
+    padding: 15px; 
+    text-align: center; 
+    background: #fff; 
+    border-radius: 8px; 
+    margin-top: 5px; 
+  }
+
   .resume-info { margin-top: 10px; font-size: 0.85rem; color: #666; }
-  .delete-btn { position: absolute; right: 15px; top: 15px; background: #ff4d4d; color: white; border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; font-weight: bold; }
-  .add-btn { margin-top: 25px; background: #4a90e2; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-  .submit-btn { margin-top: 25px; background: #28a745; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
-  .success, .error { padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; }
-  .success { background: #d4edda; color: #155724; }
-  .error { background: #f8d7da; color: #721c24; }
+  
+  .delete-btn { 
+    position: absolute; 
+    right: 15px; 
+    top: 15px; 
+    background: linear-gradient(135deg, #ff4d4d 0%, #e63939 100%); 
+    color: white; 
+    border: none; 
+    border-radius: 6px; 
+    padding: 8px 16px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(255, 77, 77, 0.3);
+    transition: all 0.3s;
+  }
+
+  .delete-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4); }
+  
+  .add-btn { 
+    margin-top: 25px; 
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%); 
+    color: white; 
+    border: none; 
+    padding: 14px 30px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+    transition: all 0.3s;
+  }
+
+  .add-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(74, 144, 226, 0.4); }
+  
+  .submit-btn { 
+    margin-top: 25px; 
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%); 
+    color: white; 
+    border: none; 
+    padding: 16px 40px; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 1.1rem;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s;
+  }
+
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4); }
+  
+  .success, .error { padding: 16px; border-radius: 10px; margin-top: 20px; text-align: center; font-weight: 600; font-size: 1rem; }
+  .success { background: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+  .error { background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; }
   .hidden { display: none; }
+  
   .loader { display: none; text-align: center; margin-top: 20px; }
   .loader.active { display: block; }
   .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  @media (max-width: 768px) { .form-row { flex-direction: column; } }
+  
+  @media (max-width: 768px) { 
+    .logo-container { flex-wrap: wrap; gap: 10px; }
+    .logo-container img { max-height: 45px; }
+    .form-row { flex-direction: column; }
+    h2 { font-size: 1.5rem; padding: 16px 15px; }
+    h3 { font-size: 1.1rem; }
+    label { font-size: 0.9rem; }
+    /* Enhanced Input Styling */
+input, select, textarea {
+  background-color: #ffffff;
+  border: 1px solid #d1d9e6; /* Softer border color */
+  box-shadow: inset 2px 2px 5px #f0f2f5; /* Subtle inner shadow for depth */
+}
+
+input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15); /* More prominent focus ring */
+}
+
+/* Section Separation */
+.candidate-section {
+  border: none;
+  border-left: 5px solid #667eea; /* Color-coded left border for better separation */
+  background: #ffffff;
+  transition: transform 0.2s ease-in-out;
+}
+
+.candidate-section:hover {
+  transform: scale(1.01); /* Subtle lift on hover to show interactivity */
+}
+  }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="form-wrapper">
-      <h2>Agency Candidate Submission</h2>
-      
-      <div class="info-box">
-        <strong>📋 How to Submit:</strong><br>
-        1️⃣ Fill agency details and add candidates (or import CSV)<br>
-        2️⃣ Upload resume for each candidate<br>
-        3️⃣ Click "Submit All Candidates" - data will be sent to n8n<br>
-        <em style="color: #0c5bb4;">✅ CSV import works! All data including resumes will be submitted.</em>
-      </div>
+  <div class="container">
+    <div class="form-wrapper">
+      <!-- Logo Container -->
+      <div class="logo-container">
+        <img src="https://red-fish.s3.ap-south-1.amazonaws.com/images/brands/thumbnails/ALL+BRAND+LOGO.jpeg" alt="Company Brands">
+      </div>
+      
+      <h2>Candidate Submission</h2>
+      
+      <div class="info-box" id="infoBox" style="display: none;">
+        <strong>📋 Agency Submission:</strong><br>
+        Submit multiple candidates from your recruitment agency. CSV bulk upload is supported for faster data entry.
+      </div>
 
-        <div class="import-section">
-          <h3>📊 CSV Import</h3>
-          <div class="import-btn-group">
-            <button type="button" class="btn btn-green" onclick="downloadCSV()">📥 Download Template</button>
-            <button type="button" class="btn btn-blue" onclick="document.getElementById('fileInput').click()">📤 Import CSV</button>
-            <input type="file" id="fileInput" accept=".csv" onchange="importCSV(event)">
-          </div>
-          <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">CSV import will populate candidate details. You'll still need to upload resumes manually.</p>
-        </div>
+      <!-- Submission Type Selection -->
+      <div class="submission-type-section">
+        <h3>Select Submission Type *</h3>
+        <select id="submissionType" onchange="handleSubmissionTypeChange()" required>
+          <option value="">-- Select Submission Type --</option>
+          <option value="applicant">Applicant (Self)</option>
+          <option value="agency">Agency</option>
+        </select>
+      </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label>Agency Name *</label>
-            <input type="text" id="agencyName" required>
-          </div>
-          <div class="form-group">
-            <label>Agency Email *</label>
-            <input type="email" id="agencyEmail" required>
-          </div>
-        </div>
+      <!-- Submitter Details (Agency only) -->
+      <div id="submitterDetails" class="submitter-details hidden">
+        <h3>Agency Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Agency Name *</label>
+            <input type="text" id="submitterName" required>
+          </div>
+          <div class="form-group">
+            <label>Agency Email *</label>
+            <input type="email" id="submitterEmail" required>
+          </div>
+        </div>
+      </div>
 
-        <div id="candidateContainer">
-          <div class="candidate-section">
-            <button type="button" class="delete-btn" onclick="deleteCand(this)">Delete</button>
-            <h3>Candidate 1</h3>
-            <div class="form-row">
-              <div class="form-group"><label>Name *</label><input type="text" class="cand-name" required></div>
-              <div class="form-group"><label>Email *</label><input type="email" class="cand-email" required></div>
-              <div class="form-group"><label>Organization</label><input type="text" class="cand-org"></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Experience (Yrs)</label><input type="number" class="cand-exp"></div>
-              <div class="form-group"><label>Notice (Days)</label><input type="text" class="cand-notice"></div>
-              <div class="form-group"><label>Current Location</label><input type="text" class="cand-loc"></div>
-            </div>
-            <div class="form-row">
-              <div class="form-group"><label>Preferred Location</label><input type="text" class="cand-pref"></div>
-              <div class="form-group"><label>Current CTC</label><input type="text" class="cand-ctc"></div>
-              <div class="form-group"><label>Expected CTC</label><input type="text" class="cand-ectc"></div>
-            </div>
-            <div class="form-group"><label>LinkedIn</label><input type="url" class="cand-li"></div>
-            <div class="form-group"><label>Remarks</label><textarea class="cand-rem" rows="3"></textarea></div>
-            <div class="form-group">
-              <label>Resume (PDF/DOC/DOCX) *</label>
-              <div class="upload-box">
-                <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)">
-                <div class="resume-info"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <!-- Referral Section (Applicant only) -->
+      <div id="referralSection" class="submitter-details hidden">
+        <h3>Application Source</h3>
+        <div class="form-group">
+          <label>Do you know anybody in our organization? *</label>
+          <select id="referralChoice" onchange="handleReferralChange()" required>
+            <option value="">-- Select --</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+        <div id="referralFields" class="hidden" style="margin-top: 15px;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employee ID *</label>
+              <input type="text" id="referralEmpId">
+            </div>
+            <div class="form-group">
+              <label>Employee Email *</label>
+              <input type="email" id="referralEmpEmail">
+            </div>
+          </div>
+        </div>
+        <div id="sourceField" class="hidden" style="margin-top: 15px;">
+          <div class="form-group">
+            <label>Where did you find this opening? *</label>
+            <select id="sourceSelect" required>
+              <option value="">-- Select Source --</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Naukri">Naukri</option>
+              <option value="Indeed">Indeed</option>
+              <option value="Company Website">Company Website</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-        <button type="button" class="add-btn" onclick="addCand()">+ Add Candidate</button>
-        <button type="button" class="submit-btn" onclick="submitForm()">✅ Submit All Candidates</button>
+      <!-- CSV Import Section (Agency only) -->
+      <div id="importSection" class="import-section hidden">
+        <h3>📊 CSV Import</h3>
+        <div class="import-btn-group">
+          <button type="button" class="btn btn-green" onclick="downloadCSV()">📥 Download Template</button>
+          <button type="button" class="btn btn-blue" onclick="document.getElementById('fileInput').click()">📤 Import CSV</button>
+          <input type="file" id="fileInput" accept=".csv" onchange="importCSV(event)">
+        </div>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">CSV import will populate candidate details. You'll still need to upload resumes manually.</p>
+      </div>
 
-        <div class="loader" id="loader">
-          <div class="spinner"></div>
-          <p>Processing resumes and submitting...</p>
-        </div>
+      <!-- Candidate Container -->
+      <div id="candidateContainer" class="hidden"></div>
 
-        <div id="msg"></div>
-      </div>
-    </div>
-  </div>
+      <!-- Add Candidate Button (Agency only) -->
+      <div id="addCandidateSection" class="hidden">
+        <button type="button" class="add-btn" onclick="addCand()">+ Add Candidate</button>
+      </div>
+
+      <!-- Submit Button -->
+      <div id="submitSection" class="hidden">
+        <button type="button" class="submit-btn" onclick="submitForm()">✅ Submit All Candidates</button>
+      </div>
+
+      <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <p>Processing resumes and submitting..</p>
+      </div>
+
+      <div id="msg"></div>
+    </div>
+  </div>
 
 <script>
 // Configuration - UPDATE THIS WITH YOUR N8N WEBHOOK URL
-const N8N_WEBHOOK_URL = 'https://n8n.wowflo.io/webhook/bd8f04bf-82a9-4962-8607-99943a4d4a41';
-function downloadCSV() {
-  const csv = "Candidate Name*,Candidate Email*,Current Organization,Experience (Years),Notice Period (Days),Current Location,Preferred Location,Current CTC (LPA),Expected CTC (LPA),LinkedIn Profile,Remarks\n" +
-    "Rajesh Kumar,rajesh@email.com,Infosys,5,60,Bangalore,Hyderabad,8,12,https://linkedin.com/in/rajesh,Java developer\n" +
-    "Priya Sharma,priya@email.com,TCS,3,30,Mumbai,Pune,6,9,https://linkedin.com/in/priya,Full-stack developer";
-  const blob = new Blob([csv], {type: 'text/csv'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'candidates_template.csv';
-  a.click();
-  msg('✅ CSV template downloaded!', 1);
-}
-const urlParamss = new URLSearchParams(window.location.search);
-const EXECUTION_ID = urlParamss.get('execution_id') || 'UNKNOWN';
+const N8N_WEBHOOK_URL = 'https://n8n.wowflo.io/webhook/hr_response';
+
+// Get execution_id from URL
+const urlParams = new URLSearchParams(window.location.search);
+const EXECUTION_ID = urlParams.get('execution_id') || 'UNKNOWN';
 console.log('Execution ID:', EXECUTION_ID);
 
+let currentSubmissionType = '';
 
-function importCSV(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  const r = new FileReader();
-  r.onload = (ev) => {
-    const rows = parseCSV(ev.target.result);
-    if (rows.length < 2) return msg('❌ No data found in CSV!', 0);
-    const h = rows[0], data = rows.slice(1).map(row => {
-      const o = {};
-      h.forEach((k, i) => o[k] = row[i] || '');
-      return o;
-    });
-    
-    // Clear existing candidates first
-    const container = document.getElementById('candidateContainer');
-    container.innerHTML = '';
-    
-    // Populate with CSV data
-    populateCands(data);
-    
-    msg(`✅ Imported ${data.length} candidates! Remember to upload resumes.`, 1);
-  };
-  r.readAsText(file);
-  e.target.value = '';
+function handleReferralChange() {
+  const referralChoice = document.getElementById('referralChoice').value;
+  const referralFields = document.getElementById('referralFields');
+  const sourceField = document.getElementById('sourceField');
+  const empIdInput = document.getElementById('referralEmpId');
+  const empEmailInput = document.getElementById('referralEmpEmail');
+  const sourceSelect = document.getElementById('sourceSelect');
+  
+  if (referralChoice === 'yes') {
+    referralFields.classList.remove('hidden');
+    sourceField.classList.add('hidden');
+    empIdInput.required = true;
+    empEmailInput.required = true;
+    sourceSelect.required = false;
+    sourceSelect.value = '';
+  } else if (referralChoice === 'no') {
+    referralFields.classList.add('hidden');
+    sourceField.classList.remove('hidden');
+    empIdInput.required = false;
+    empEmailInput.required = false;
+    empIdInput.value = '';
+    empEmailInput.value = '';
+    sourceSelect.required = true;
+  } else {
+    referralFields.classList.add('hidden');
+    sourceField.classList.add('hidden');
+    empIdInput.required = false;
+    empEmailInput.required = false;
+    sourceSelect.required = false;
+  }
 }
 
-function parseCSV(txt) {
-  const rows = [];
-  let row = [], field = '', inQ = false;
-  for (let i = 0; i < txt.length; i++) {
-    const c = txt[i], n = txt[i+1];
-    if (c === '"') {
-      if (inQ && n === '"') { field += '"'; i++; }
-      else inQ = !inQ;
-    } else if (c === ',' && !inQ) {
-      row.push(field.trim());
-      field = '';
-    } else if ((c === '\n' || c === '\r') && !inQ) {
-      if (field || row.length) {
-        row.push(field.trim());
-        rows.push([...row]);
-        row = [];
-        field = '';
-      }
-      if (c === '\r' && n === '\n') i++;
-    } else field += c;
-  }
-  if (field || row.length) {
-    row.push(field.trim());
-    rows.push(row);
-  }
-  return rows.filter(r => r.some(c => c));
+function handleSubmissionTypeChange() {
+  const submissionType = document.getElementById('submissionType').value;
+  currentSubmissionType = submissionType;
+  
+  const infoBox = document.getElementById('infoBox');
+  const submitterDetails = document.getElementById('submitterDetails');
+  const referralSection = document.getElementById('referralSection');
+  const importSection = document.getElementById('importSection');
+  const candidateContainer = document.getElementById('candidateContainer');
+  const addCandidateSection = document.getElementById('addCandidateSection');
+  const submitSection = document.getElementById('submitSection');
+  
+  // Reset form
+  candidateContainer.innerHTML = '';
+  document.getElementById('submitterName').value = '';
+  document.getElementById('submitterEmail').value = '';
+  document.getElementById('referralChoice').value = '';
+  document.getElementById('referralEmpId').value = '';
+  document.getElementById('referralEmpEmail').value = '';
+  document.getElementById('sourceSelect').value = '';
+  document.getElementById('referralFields').classList.add('hidden');
+  document.getElementById('sourceField').classList.add('hidden');
+  
+  if (submissionType === 'applicant') {
+    infoBox.style.display = 'none';
+    submitterDetails.classList.add('hidden');
+    referralSection.classList.remove('hidden');
+    importSection.classList.add('hidden');
+    addCandidateSection.classList.add('hidden');
+    candidateContainer.classList.remove('hidden');
+    submitSection.classList.remove('hidden');
+    addSingleCandidate();
+  } else if (submissionType === 'agency') {
+    infoBox.style.display = 'block';
+    submitterDetails.classList.remove('hidden');
+    referralSection.classList.add('hidden');
+    importSection.classList.remove('hidden');
+    addCandidateSection.classList.remove('hidden');
+    candidateContainer.classList.remove('hidden');
+    submitSection.classList.remove('hidden');
+    addCand();
+  } else {
+    infoBox.style.display = 'none';
+    submitterDetails.classList.add('hidden');
+    referralSection.classList.add('hidden');
+    importSection.classList.add('hidden');
+    addCandidateSection.classList.add('hidden');
+    candidateContainer.classList.add('hidden');
+    submitSection.classList.add('hidden');
+  }
 }
 
-function populateCands(data) {
-  const c = document.getElementById('candidateContainer');
-  c.innerHTML = '';
-  data.forEach((d, i) => {
-    const s = document.createElement('div');
-    s.className = 'candidate-section';
-    s.innerHTML = `<button type="button" class="delete-btn" onclick="deleteCand(this)">Delete</button><h3>Candidate ${i+1}</h3>
-      <div class="form-row">
-        <div class="form-group"><label>Name *</label><input type="text" class="cand-name" value="${d['Candidate Name*']||''}" required></div>
-        <div class="form-group"><label>Email *</label><input type="email" class="cand-email" value="${d['Candidate Email*']||''}" required></div>
-        <div class="form-group"><label>Organization</label><input type="text" class="cand-org" value="${d['Current Organization']||''}"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Experience</label><input type="number" class="cand-exp" value="${d['Experience (Years)']||''}"></div>
-        <div class="form-group"><label>Notice</label><input type="text" class="cand-notice" value="${d['Notice Period (Days)']||''}"></div>
-        <div class="form-group"><label>Location</label><input type="text" class="cand-loc" value="${d['Current Location']||''}"></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Preferred</label><input type="text" class="cand-pref" value="${d['Preferred Location']||''}"></div>
-        <div class="form-group"><label>CTC</label><input type="text" class="cand-ctc" value="${d['Current CTC (LPA)']||''}"></div>
-        <div class="form-group"><label>Expected</label><input type="text" class="cand-ectc" value="${d['Expected CTC (LPA)']||''}"></div>
-      </div>
-      <div class="form-group"><label>LinkedIn</label><input type="url" class="cand-li" value="${d['LinkedIn Profile']||''}"></div>
-      <div class="form-group"><label>Remarks</label><textarea class="cand-rem" rows="3">${d['Remarks']||''}</textarea></div>
-      <div class="form-group">
-        <label>Resume (PDF/DOC/DOCX) *</label>
-        <div class="upload-box">
-          <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)">
-          <div class="resume-info"></div>
-        </div>
-      </div>`;
-    c.appendChild(s);
-  });
+function addSingleCandidate() {
+  const container = document.getElementById('candidateContainer');
+  container.innerHTML = `
+    <div class="candidate-section">
+      <h3>Your Details</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" class="cand-name" required></div>
+        <div class="form-group"><label>Email *</label><input type="email" class="cand-email" required></div>
+        <div class="form-group"><label>Current Organization</label><input type="text" class="cand-org"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Experience (Yrs)</label><input type="number" class="cand-exp"></div>
+        <div class="form-group"><label>Notice (Days)</label><input type="text" class="cand-notice"></div>
+        <div class="form-group"><label>Current Location</label><input type="text" class="cand-loc"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Preferred Location</label><input type="text" class="cand-pref"></div>
+        <div class="form-group"><label>Current CTC (LPA) </label><input type="text" class="cand-ctc"></div>
+        <div class="form-group"><label>Expected CTC (LPA)</label><input type="text" class="cand-ectc"></div>
+      </div>
+      <div class="form-group"><label>LinkedIn</label><input type="url" class="cand-li"></div>
+      <div class="form-group"><label>Remarks</label><textarea class="cand-rem" rows="3"></textarea></div>
+      <div class="form-group">
+        <label>Resume (PDF/DOC/DOCX) *</label>
+        <div class="upload-box">
+          <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)">
+          <div class="resume-info"></div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function addCand() {
-  const c = document.getElementById('candidateContainer');
-  const n = c.querySelectorAll('.candidate-section').length + 1;
-  const clone = c.querySelector('.candidate-section').cloneNode(true);
-  clone.querySelector('h3').textContent = `Candidate ${n}`;
-  clone.querySelectorAll('input:not([type="file"]),textarea').forEach(el => el.value = '');
-  
-  // Reset file input
-  const fileInput = clone.querySelector('.cand-resume');
-  fileInput.value = '';
-  fileInput.removeAttribute('data-base64');
-  clone.querySelector('.resume-info').innerHTML = '';
-  
-  c.appendChild(clone);
+  const container = document.getElementById('candidateContainer');
+  const count = container.querySelectorAll('.candidate-section').length + 1;
+  const section = document.createElement('div');
+  section.className = 'candidate-section';
+  section.innerHTML = `
+    <button type="button" class="delete-btn" onclick="deleteCand(this)">Delete</button>
+    <h3>Candidate ${count}</h3>
+    <div class="form-row">
+      <div class="form-group"><label>Name *</label><input type="text" class="cand-name" required></div>
+      <div class="form-group"><label>Email *</label><input type="email" class="cand-email" required></div>
+      <div class="form-group"><label>Organization</label><input type="text" class="cand-org"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Experience (Yrs)</label><input type="number" class="cand-exp"></div>
+      <div class="form-group"><label>Notice (Days)</label><input type="text" class="cand-notice"></div>
+      <div class="form-group"><label>Current Location</label><input type="text" class="cand-loc"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>Preferred Location</label><input type="text" class="cand-pref"></div>
+      <div class="form-group"><label>Current CTC</label><input type="text" class="cand-ctc"></div>
+      <div class="form-group"><label>Expected CTC</label><input type="text" class="cand-ectc"></div>
+    </div>
+    <div class="form-group"><label>LinkedIn</label><input type="url" class="cand-li"></div>
+    <div class="form-group"><label>Remarks</label><textarea class="cand-rem" rows="3"></textarea></div>
+    <div class="form-group">
+      <label>Resume (PDF/DOC/DOCX) *</label>
+      <div class="upload-box">
+        <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)">
+        <div class="resume-info"></div>
+      </div>
+    </div>
+  `;
+  container.appendChild(section);
 }
 
 function deleteCand(btn) {
-  if (document.querySelectorAll('.candidate-section').length <= 1) return alert('Need at least 1 candidate!');
-  btn.closest('.candidate-section').remove();
-  document.querySelectorAll('.candidate-section').forEach((s, i) => s.querySelector('h3').textContent = `Candidate ${i+1}`);
+  if (document.querySelectorAll('.candidate-section').length <= 1) {
+    return msg('❌ Need at least 1 candidate!', 0);
+  }
+  btn.closest('.candidate-section').remove();
+  updateCandidateNumbers();
+}
+
+function updateCandidateNumbers() {
+  document.querySelectorAll('.candidate-section').forEach((s, i) => {
+    s.querySelector('h3').textContent = `Candidate ${i + 1}`;
+  });
+}
+
+function downloadCSV() {
+  const csv = "Candidate Name*,Candidate Email*,Current Organization,Experience (Years),Notice Period (Days),Current Location,Preferred Location,Current CTC (LPA),Expected CTC (LPA),LinkedIn Profile,Remarks\n" +
+    "Rajesh Kumar,rajesh@email.com,Infosys,5,60,Bangalore,Hyderabad,8,12,https://linkedin.com/in/rajesh,Java developer\n" +
+    "Priya Sharma,priya@email.com,TCS,3,30,Mumbai,Pune,6,9,https://linkedin.com/in/priya,Full-stack developer";
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'candidates_template.csv';
+  a.click();
+  msg('✅ CSV template downloaded!', 1);
+}
+
+function importCSV(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const rows = parseCSV(ev.target.result);
+    if (rows.length < 2) return msg('❌ No data found in CSV!', 0);
+    
+    const headers = rows[0];
+    const data = rows.slice(1).map(row => {
+      const obj = {};
+      headers.forEach((key, i) => obj[key] = row[i] || '');
+      return obj;
+    });
+    
+    const container = document.getElementById('candidateContainer');
+    container.innerHTML = '';
+    populateCands(data);
+    msg(`✅ Imported ${data.length} candidates! Remember to upload resumes.`, 1);
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function parseCSV(txt) {
+  const rows = [];
+  let row = [], field = '', inQuote = false;
+  
+  for (let i = 0; i < txt.length; i++) {
+    const c = txt[i], next = txt[i+1];
+    if (c === '"') {
+      if (inQuote && next === '"') { field += '"'; i++; }
+      else inQuote = !inQuote;
+    } else if (c === ',' && !inQuote) {
+      row.push(field.trim());
+      field = '';
+    } else if ((c === '\n' || c === '\r') && !inQuote) {
+      if (field || row.length) {
+        row.push(field.trim());
+        rows.push([...row]);
+        row = [];
+        field = '';
+      }
+      if (c === '\r' && next === '\n') i++;
+    } else field += c;
+  }
+  if (field || row.length) {
+    row.push(field.trim());
+    rows.push(row);
+  }
+  return rows.filter(r => r.some(c => c));
+}
+
+function populateCands(data) {
+  const container = document.getElementById('candidateContainer');
+  data.forEach((d, i) => {
+    const section = document.createElement('div');
+    section.className = 'candidate-section';
+    section.innerHTML = `
+      <button type="button" class="delete-btn" onclick="deleteCand(this)">Delete</button>
+      <h3>Candidate ${i+1}</h3>
+      <div class="form-row">
+        <div class="form-group"><label>Name *</label><input type="text" class="cand-name" value="${d['Candidate Name*']||''}" required></div>
+        <div class="form-group"><label>Email *</label><input type="email" class="cand-email" value="${d['Candidate Email*']||''}" required></div>
+        <div class="form-group"><label>Organization</label><input type="text" class="cand-org" value="${d['Current Organization']||''}"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Experience</label><input type="number" class="cand-exp" value="${d['Experience (Years)']||''}"></div>
+        <div class="form-group"><label>Notice</label><input type="text" class="cand-notice" value="${d['Notice Period (Days)']||''}"></div>
+        <div class="form-group"><label>Location</label><input type="text" class="cand-loc" value="${d['Current Location']||''}"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Preferred</label><input type="text" class="cand-pref" value="${d['Preferred Location']||''}"></div>
+        <div class="form-group"><label>CTC</label><input type="text" class="cand-ctc" value="${d['Current CTC (LPA)']||''}"></div>
+        <div class="form-group"><label>Expected</label><input type="text" class="cand-ectc" value="${d['Expected CTC (LPA)']||''}"></div>
+      </div>
+      <div class="form-group"><label>LinkedIn</label><input type="url" class="cand-li" value="${d['LinkedIn Profile']||''}"></div>
+      <div class="form-group"><label>Remarks</label><textarea class="cand-rem" rows="3">${d['Remarks']||''}</textarea></div>
+      <div class="form-group">
+        <label>Resume (PDF/DOC/DOCX) *</label>
+        <div class="upload-box">
+          <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)">
+          <div class="resume-info"></div>
+        </div>
+      </div>
+    `;
+    container.appendChild(section);
+  });
 }
 
 function handleResumeUpload(input) {
-  const file = input.files[0];
-  const infoDiv = input.parentElement.querySelector('.resume-info');
-  
-  if (!file) {
-    infoDiv.innerHTML = '';
-    return;
-  }
-  
-  infoDiv.innerHTML = '⏳ Processing...';
-  infoDiv.style.color = '#666';
-  
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const base64Data = e.target.result;
-    input.setAttribute('data-base64', base64Data);
-    input.setAttribute('data-filename', file.name);
-    input.setAttribute('data-filetype', file.type);
-    input.setAttribute('data-filesize', file.size);
-    infoDiv.innerHTML = `✅ ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-    infoDiv.style.color = '#28a745';
-  };
-  
-  reader.onerror = function() {
-    infoDiv.innerHTML = '❌ Error reading file';
-    infoDiv.style.color = '#dc3545';
-  };
-  
-  reader.readAsDataURL(file);
+  const file = input.files[0];
+  const infoDiv = input.parentElement.querySelector('.resume-info');
+  
+  if (!file) {
+    infoDiv.innerHTML = '';
+    return;
+  }
+  
+  infoDiv.innerHTML = '⏳ Processing...';
+  infoDiv.style.color = '#666';
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Data = e.target.result;
+    input.setAttribute('data-base64', base64Data);
+    input.setAttribute('data-filename', file.name);
+    input.setAttribute('data-filetype', file.type);
+    input.setAttribute('data-filesize', file.size);
+    infoDiv.innerHTML = `✅ ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+    infoDiv.style.color = '#28a745';
+  };
+  
+  reader.onerror = function() {
+    infoDiv.innerHTML = '❌ Error reading file';
+    infoDiv.style.color = '#dc3545';
+  };
+  
+  reader.readAsDataURL(file);
 }
 
 async function submitForm() {
-  const agencyName = document.getElementById('agencyName').value;
-  const agencyEmail = document.getElementById('agencyEmail').value;
-  
-  if (!agencyName || !agencyEmail) {
-    return msg('❌ Please fill in agency details!', 0);
-  }
-  
-  const loader = document.getElementById('loader');
-  loader.classList.add('active');
-  
-  await new Promise(resolve => setTimeout(resolve, 100));
-  
-  const cands = [];
-  const sections = document.querySelectorAll('.candidate-section');
-  
-  for (let i = 0; i < sections.length; i++) {
-    const s = sections[i];
-    const name = s.querySelector('.cand-name').value;
-    const email = s.querySelector('.cand-email').value;
-    const resumeInput = s.querySelector('.cand-resume');
-    
-    if (!name || !email) {
-      loader.classList.remove('active');
-      return msg('❌ All candidates must have name and email!', 0);
-    }
-    
-    if (!resumeInput.files[0]) {
-      loader.classList.remove('active');
-      return msg(`❌ Please upload resume for ${name}!`, 0);
-    }
-    
-    const base64Data = resumeInput.getAttribute('data-base64');
-    if (!base64Data) {
-      loader.classList.remove('active');
-      return msg(`❌ Resume for ${name} is still processing. Please wait.`, 0);
-    }
-    
-    cands.push({
-      candidate_name: name,
-      candidate_email: email,
-      current_organization: s.querySelector('.cand-org').value,
-      experience: s.querySelector('.cand-exp').value,
-      notice_period: s.querySelector('.cand-notice').value,
-      current_location: s.querySelector('.cand-loc').value,
-      preferred_location: s.querySelector('.cand-pref').value,
-      current_ctc: s.querySelector('.cand-ctc').value,
-      expected_ctc: s.querySelector('.cand-ectc').value,
-      linkedin: s.querySelector('.cand-li').value,
-      remarks: s.querySelector('.cand-rem').value,
-      resume: {
-        name: resumeInput.getAttribute('data-filename'),
-        type: resumeInput.getAttribute('data-filetype'),
-        size: parseInt(resumeInput.getAttribute('data-filesize')),
-        data: base64Data
-      }
-    });
-  }
-  
-  const payload = {
-    execution_id: EXECUTION_ID,
-    agency_name: agencyName,
-    agency_email: agencyEmail,
-    candidateContainer: cands,
-    submitted_at: new Date().toISOString()
-  };
-  
-  const jsonStr = JSON.stringify(payload);
-  const totalSizeKB = (jsonStr.length / 1024).toFixed(1);
-  
-  console.log('📤 Submitting payload:', payload);
-  console.log('📊 Total size:', totalSizeKB, 'KB');
-  
-  try {
-    // Send directly to n8n webhook
-    const response = await fetch(N8N_WEBHOOK_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: jsonStr
-    });
-    
-    console.log('📥 Response status:', response.status);
-    
-    loader.classList.remove('active');
-    
-    if (response.ok) {
-      msg(`✅ Successfully submitted ${cands.length} candidate(s) with resumes! (${totalSizeKB} KB)`, 1);
-      
-      // Reset form after successful submission
-      setTimeout(() => {
-        if (confirm('Submission successful! Reset form for new submission?')) {
-          location.reload();
-        }
-      }, 2000);
-    } else {
-      const errorText = await response.text();
-      console.error('❌ Error response:', errorText);
-      msg(`❌ Submission failed: ${response.statusText}`, 0);
-    }
-  } catch (error) {
-    console.error('❌ Submission error:', error);
-    loader.classList.remove('active');
-    msg(`❌ Error: ${error.message}`, 0);
-  }
+  const submissionType = document.getElementById('submissionType').value;
+  
+  if (!submissionType) {
+    return msg('❌ Please select a submission type!', 0);
+  }
+  
+  let submitterName = '';
+  let submitterEmail = '';
+  let referralEmpId = '';
+  let referralEmpEmail = '';
+  let source = '';
+  
+  if (submissionType === 'agency') {
+    submitterName = document.getElementById('submitterName').value;
+    submitterEmail = document.getElementById('submitterEmail').value;
+    
+    if (!submitterName || !submitterEmail) {
+      return msg('❌ Please fill in agency details!', 0);
+    }
+  } else if (submissionType === 'applicant') {
+    const referralChoice = document.getElementById('referralChoice').value;
+    
+    if (!referralChoice) {
+      return msg('❌ Please answer the referral question!', 0);
+    }
+    
+    if (referralChoice === 'yes') {
+      referralEmpId = document.getElementById('referralEmpId').value;
+      referralEmpEmail = document.getElementById('referralEmpEmail').value;
+      
+      if (!referralEmpId || !referralEmpEmail) {
+        return msg('❌ Please fill in employee referral details!', 0);
+      }
+    } else if (referralChoice === 'no') {
+      source = document.getElementById('sourceSelect').value;
+      
+      if (!source) {
+        return msg('❌ Please select where you found this opening!', 0);
+      }
+    }
+  }
+  
+  const loader = document.getElementById('loader');
+  loader.classList.add('active');
+  
+  await new Promise(resolve => setTimeout(resolve, 100));
+  
+  const candidates = [];
+  const sections = document.querySelectorAll('.candidate-section');
+  
+  for (let i = 0; i < sections.length; i++) {
+    const s = sections[i];
+    const name = s.querySelector('.cand-name').value;
+    const email = s.querySelector('.cand-email').value;
+    const resumeInput = s.querySelector('.cand-resume');
+    
+    if (!name || !email) {
+      loader.classList.remove('active');
+      return msg('❌ All candidates must have name and email!', 0);
+    }
+    
+    if (!resumeInput.files[0]) {
+      loader.classList.remove('active');
+      return msg(`❌ Please upload resume for ${name}!`, 0);
+    }
+    
+    const base64Data = resumeInput.getAttribute('data-base64');
+    if (!base64Data) {
+      loader.classList.remove('active');
+      return msg(`❌ Resume for ${name} is still processing. Please wait.`, 0);
+    }
+    
+    candidates.push({
+      candidate_name: name,
+      candidate_email: email,
+      current_organization: s.querySelector('.cand-org').value,
+      experience: s.querySelector('.cand-exp').value,
+      notice_period: s.querySelector('.cand-notice').value,
+      current_location: s.querySelector('.cand-loc').value,
+      preferred_location: s.querySelector('.cand-pref').value,
+      current_ctc: s.querySelector('.cand-ctc').value,
+      expected_ctc: s.querySelector('.cand-ectc').value,
+      linkedin: s.querySelector('.cand-li').value,
+      remarks: s.querySelector('.cand-rem').value,
+      resume: {
+        name: resumeInput.getAttribute('data-filename'),
+        type: resumeInput.getAttribute('data-filetype'),
+        size: parseInt(resumeInput.getAttribute('data-filesize')),
+        data: base64Data
+      }
+    });
+  }
+  
+  const payload = {
+    execution_id: EXECUTION_ID,
+    submission_type: submissionType,
+    submitter_name: submitterName,
+    submitter_email: submitterEmail,
+    referral_emp_id: referralEmpId,
+    referral_emp_email: referralEmpEmail,
+    source: source,
+    candidateContainer: candidates,
+    submitted_at: new Date().toISOString()
+  };
+  
+  const jsonStr = JSON.stringify(payload);
+  const totalSizeKB = (jsonStr.length / 1024).toFixed(1);
+  
+  console.log('📤 Submitting payload:', payload);
+  console.log('📊 Total size:', totalSizeKB, 'KB');
+  
+  try {
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: jsonStr
+    });
+    
+    console.log('📥 Response status:', response.status);
+    
+    loader.classList.remove('active');
+    
+    if (response.ok) {
+      msg(`✅ Successfully submitted ${candidates.length} candidate(s) with resumes! (${totalSizeKB} KB)`, 1);
+      
+      setTimeout(() => {
+        if (confirm('Submission successful! Reset form for new submission?')) {
+          location.reload();
+        }
+      }, 2000);
+    } else {
+      const errorText = await response.text();
+      console.error('❌ Error response:', errorText);
+      msg(`❌ Submission failed: ${response.statusText}`, 0);
+    }
+  } catch (error) {
+    console.error('❌ Submission error:', error);
+    loader.classList.remove('active');
+    msg(`❌ Error: ${error.message}`, 0);
+  }
 }
 
 function msg(txt, ok) {
-  const msgDiv = document.getElementById('msg');
-  msgDiv.innerHTML = `<div class="${ok?'success':'error'}">${txt}</div>`;
-  msgDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  setTimeout(() => msgDiv.innerHTML = '', 8000);
+  const msgDiv = document.getElementById('msg');
+  msgDiv.innerHTML = `<div class="${ok?'success':'error'}">${txt}</div>`;
+  msgDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  setTimeout(() => msgDiv.innerHTML = '', 8000);
 }
 </script>
 </body>
-</html>
+</html>.

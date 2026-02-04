@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Talent Acquisition Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --bg: #fdfeff;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #64748b;
+            --border: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%), 
+                              radial-gradient(at 100% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px 120px 20px;
+        }
+
+        .header { text-align: center; margin-bottom: 50px; }
+        .header h1 { font-weight: 800; font-size: 2.5rem; letter-spacing: -0.02em; margin-bottom: 10px; }
+        .header p { color: var(--text-sub); font-size: 1.1rem; }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border-color: var(--primary);
+        }
+
+        .role-badge {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .card h3 { margin: 0 0 8px 0; font-size: 1.4rem; font-weight: 700; }
+        
+        .contact-info { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; display: flex; align-items: center; gap: 6px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .stat-label { font-size: 0.7rem; color: var(--text-sub); text-transform: uppercase; font-weight: 600; display: block; margin-bottom: 4px; }
+        .stat-value { font-size: 0.95rem; font-weight: 700; color: var(--text-main); }
+
+        .links-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .action-link {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #fff;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+        }
+
+        .action-link:hover { background: #f1f5f9; border-color: var(--text-sub); }
+
+        /* Modern Radio Group */
+        .decision-group {
+            display: flex;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 16px;
+            gap: 4px;
+        }
+
+        .decision-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: var(--text-sub);
+        }
+
+        .decision-btn input { display: none; }
+
+        /* Selection States */
+        .select-label:has(input:checked) { background: var(--success); color: white; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .reject-label:has(input:checked) { background: var(--danger); color: white; box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3); }
+
+        /* Floating Footer */
+        .footer-action {
+            position: fixed;
+            bottom: 30px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 16px 32px;
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 99px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover { background: var(--primary-hover); transform: scale(1.05); }
+
+        .loader { grid-column: 1/-1; text-align: center; padding: 100px; color: var(--text-sub); font-weight: 500; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Talent Acquisition</h1>
+    <p>Pipeline Overview & Decision Hub</p>
+</div>
+
+<div class="container" id="candidateList">
+    <div class="loader">Gathering candidate intelligence...</div>
+</div>
+
+<div class="footer-action">
+    <button class="submit-btn" onclick="confirmAndSubmit()">Process Decisions</button>
+</div>
+
+<script>
+    const GET_CANDIDATES_API = "https://n8n.wowflo.io/webhook/getsleceted-candidates";
+    const UPDATE_STATUS_API = "https://n8n.wowflo.io/webhook/managerselected-candidate";
+    async function loadCandidates() {
+        try {
+            const res = await fetch(GET_CANDIDATES_API, { method: 'POST' });
+            const data = await res.json();
+            const candidates = Array.isArray(data) ? data : [data];
+            
+            const container = document.getElementById("candidateList");
+            container.innerHTML = "";
+
+            candidates.forEach((c, index) => {
+                const id = c.execution_id || c.row_number;
+                const email = c.candidate_email;
+                const current_ctc = c.current_ctc || c.ctc || 'N/A';
+                const expected_ctc = c.expected_ctc || c.exexpected_ctc || 'N/A';
+                const experience = c.work_experience || c.experience || 'N/A';
+                const drive_links = c.drive_links || '#';   
+                const linkedin = c.linkedin || '#';
+                const card = document.createElement("div");
+                const driveLink = c.drivelinks; 
+            //    console.log("LinkedIn URL:", linkedin);
+                                // console.log(c)
+                card.className = "card";
+                card.innerHTML = `
+                    <div class="role-badge">${c.designation || 'Applicant'}</div>
+                    <h3>${c.candidate_name}</h3>
+                    <div class="contact-info">✉️ ${email}</div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-label">Experience</span>
+                            <span class="stat-value">⚡ ${c.work_experience} Years</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Notice</span>
+                            <span class="stat-value">⏳ ${c.notice_period || '30'} Days</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Current CTC</span>
+                            <span class="stat-value"> ${current_ctc} LPA</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">Expected</span>
+                            <span class="stat-value">₹ ${expected_ctc} LPA</span>
+                        </div>
+                    </div>
+
+                    <div class="links-row">
+                        <a href="${linkedin || '#'}" target="_blank" class="action-link">LinkedIn</a>
+                        <a href="${driveLink || '#'}" target="_blank" class="action-link">Resume</a>
+                    </div>
+                    
+                    <div class="decision-group">
+                        <label class="decision-btn select-label">
+                            <input type="radio" name="decision-${index}" value="Selected" 
+                                data-id="${id}" data-email="${email}">
+                            <span>Selected</span>
+                        </label>
+                        <label class="decision-btn reject-label">
+                            <input type="radio" name="decision-${index}" value="Rejected" 
+                                data-id="${id}" data-email="${email}">
+                            <span>Rejected</span>
+                        </label>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        } catch (e) {
+            document.getElementById("candidateList").innerHTML = "Failed to load database.";
+        }
+    }
+
+    async function confirmAndSubmit() {
+        const selectedRadios = document.querySelectorAll('input[type="radio"]:checked');
+        if (selectedRadios.length === 0) { alert("Select at least one candidate."); return; }
+
+        if (confirm(`Submit ${selectedRadios.length} decision(s)? Action is irreversible.`)) {
+            for (let radio of selectedRadios) {
+                const payload = {
+                    candidate_id: radio.getAttribute('data-id'),
+                    status: radio.value,
+                    candidate_email: radio.getAttribute('data-email')
+                };
+                await fetch(UPDATE_STATUS_API, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+            }
+            alert("Success!");
+            loadCandidates();
+        }
+    }
+
+    loadCandidates();
+</script>
+
+</body>
+</html>

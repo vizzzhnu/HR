@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Otto Clothing - Candidate Submission</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body { 
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #2c3e50;
+  }
+
+  .main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Header Section */
+  .header-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+
+  .logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .logo-section img {
+    max-height: 70px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .company-tagline {
+    text-align: center;
+    color: #667eea;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  /* Execution ID Badge */
+  .execution-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+
+  /* Job Description Card */
+  .jd-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    display: none;
+  }
+
+  .jd-card.show {
+    display: block;
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .jd-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .jd-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+  }
+
+  .jd-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+
+  .jd-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .jd-meta-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+  }
+
+  .jd-meta-label {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .jd-meta-value {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+
+  .jd-content {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.8;
+    color: #2c3e50;
+  }
+
+  .jd-loading {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+    font-style: italic;
+  }
+
+  /* Form Card */
+  .form-card {
+    background: white;
+    border-radius: 20px;
+    padding: 35px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  }
+
+  /* Section Headers */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    color: white;
+  }
+
+  .section-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  /* Alert Boxes */
+  .alert {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+  }
+
+  .alert-info {
+    background: #e7f3ff;
+    border-left: 4px solid #2196F3;
+    color: #0c5bb4;
+  }
+
+  .alert-icon {
+    font-size: 1.5rem;
+  }
+
+  /* Form Groups */
+  .form-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 2px solid #e9ecef;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 15px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .required {
+    color: #e74c3c;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+    background: white;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  /* Candidate Cards */
+  .candidate-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 20px;
+    border: 2px solid #e9ecef;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .candidate-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+  }
+
+  .candidate-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+
+  .candidate-number {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+  }
+
+  .candidate-badge {
+    width: 35px;
+    height: 35px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  /* File Upload */
+  .upload-area {
+    border: 2px dashed #cbd5e0;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .upload-area:hover {
+    border-color: #667eea;
+    background: #f0f4ff;
+  }
+
+  .upload-area.has-file {
+    border-color: #28a745;
+    background: #f0fdf4;
+  }
+
+  .upload-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    color: #cbd5e0;
+  }
+
+  .upload-area.has-file .upload-icon {
+    color: #28a745;
+  }
+
+  .upload-text {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  .upload-hint {
+    font-size: 0.85rem;
+    color: #7f8c8d;
+  }
+
+  .file-info {
+    margin-top: 15px;
+    padding: 12px;
+    background: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #28a745;
+    font-weight: 600;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  }
+
+  .btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  .btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+  }
+
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+  }
+
+  .btn-outline {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+  }
+
+  .btn-outline:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  /* CSV Import Section */
+  .import-section {
+    background: linear-gradient(135deg, #e8f4f8 0%, #f0f8ff 100%);
+    border: 2px dashed #4a90e2;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .import-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
+
+  /* Action Buttons Row */
+  .actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+
+  /* Messages */
+  .message {
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    animation: slideIn 0.5s ease-out;
+  }
+
+  .message-success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+  }
+
+  .message-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 2px solid #f5c6cb;
+  }
+
+  /* Loader */
+  .loader-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loader-overlay.active {
+    display: flex;
+  }
+
+  .loader-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+
+  .spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .loader-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  /* Utility Classes */
+  .hidden {
+    display: none !important;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-4 {
+    margin-top: 25px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .header-card, .jd-card, .form-card {
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+
+    .actions-row {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .logo-section img {
+      max-height: 50px;
+    }
+
+    .jd-meta-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="main-container">
+    <!-- Header -->
+    <div class="header-card">
+      <div class="logo-section">
+        <img src="https://red-fish.s3.ap-south-1.amazonaws.com/images/brands/thumbnails/ALL+BRAND+LOGO.jpeg" alt="Otto Clothing Brands">
+      </div>
+      <div class="company-tagline">Building Tomorrow, Today</div>
+      <h1>Candidate Submission Portal</h1>
+      <p class="subtitle">Submit your candidate profiles for open positions</p>
+      <div class="execution-badge" id="executionBadge" style="display: none;">
+        <span id="executionText"></span>
+      </div>
+    </div>
+
+    <!-- Job Description Card -->
+    <div class="jd-card" id="jdCard">
+      <div class="jd-header">
+        <div class="jd-icon">📋</div>
+        <div class="jd-title">Position Details</div>
+      </div>
+      <div class="jd-loading" id="jdLoading">Loading job details...</div>
+      <div id="jdMetaGrid" style="display: none;"></div>
+      <div id="jdContentSection" style="display: none;">
+        <h3 style="margin-bottom: 15px; color: #2c3e50;">Job Description</h3>
+        <div class="jd-content" id="jdContent"></div>
+      </div>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="form-card">
+      <!-- Submission Type Selection -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-icon">👤</div>
+          <div class="section-title">Submission Type</div>
+        </div>
+        <div class="form-group">
+          <label>Select Submission Type <span class="required">*</span></label>
+          <select id="submissionType" onchange="handleSubmissionTypeChange()" required>
+            <option value="">-- Select Type --</option>
+            <option value="applicant">🙋 Applicant (Self Application)</option>
+            <option value="agency">🏢 Recruitment Agency</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Agency Details -->
+      <div id="agencySection" class="form-section hidden">
+        <div class="section-header">
+          <div class="section-icon">🏢</div>
+          <div class="section-title">Agency Information</div>
+        </div>
+        <div class="alert alert-info">
+          <span class="alert-icon">ℹ️</span>
+          <span>Submit multiple candidates from your recruitment agency. CSV bulk upload supported.</span>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Agency Name <span class="required">*</span></label>
+            <input type="text" id="agencyName" placeholder="Enter agency name">
+          </div>
+          <div class="form-group">
+            <label>Agency Email <span class="required">*</span></label>
+            <input type="email" id="agencyEmail" placeholder="agency@example.com">
+          </div>
+        </div>
+      </div>
+
+      <!-- Applicant Source -->
+      <div id="applicantSection" class="form-section hidden">
+        <div class="section-header">
+          <div class="section-icon">📍</div>
+          <div class="section-title">Application Source</div>
+        </div>
+        <div class="form-group">
+          <label>Do you know anyone in our organization? <span class="required">*</span></label>
+          <select id="referralChoice" onchange="handleReferralChange()">
+            <option value="">-- Select --</option>
+            <option value="yes">Yes, I have a referral</option>
+            <option value="no">No, found this opening elsewhere</option>
+          </select>
+        </div>
+        <div id="referralFields" class="hidden mt-4">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employee ID <span class="required">*</span></label>
+              <input type="text" id="referralEmpId" placeholder="e.g., EMP001">
+            </div>
+            <div class="form-group">
+              <label>Employee Email <span class="required">*</span></label>
+              <input type="email" id="referralEmpEmail" placeholder="employee@ottoclothing.in">
+            </div>
+          </div>
+        </div>
+        <div id="sourceField" class="hidden mt-4">
+          <div class="form-group">
+            <label>Where did you find this opening? <span class="required">*</span></label>
+            <select id="sourceSelect">
+              <option value="">-- Select Source --</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Naukri">Naukri</option>
+              <option value="Indeed">Indeed</option>
+              <option value="Company Website">Company Website</option>
+              <option value="Facebook">Facebook</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Job Fair">Job Fair</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- CSV Import (Agency Only) -->
+      <div id="importSection" class="import-section hidden">
+        <h3 style="margin-bottom: 15px; color: #2c5aa0;">📊 Bulk Import via CSV</h3>
+        <p style="color: #666; margin-bottom: 15px;">Import multiple candidates at once using our CSV template</p>
+        <div class="import-buttons">
+          <button type="button" class="btn btn-success" onclick="downloadCSV()">
+            📥 Download Template
+          </button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('csvFile').click()">
+            📤 Upload CSV
+          </button>
+          <input type="file" id="csvFile" accept=".csv" style="display: none;" onchange="importCSV(event)">
+        </div>
+        <p style="font-size: 0.85rem; color: #666; margin-top: 10px;">
+          Note: CSV import populates candidate details. Resumes must be uploaded individually.
+        </p>
+      </div>
+
+      <!-- Candidates Container -->
+      <div id="candidatesContainer" class="hidden"></div>
+
+      <!-- Action Buttons -->
+      <div id="actionsSection" class="hidden">
+        <div class="actions-row">
+          <button type="button" id="addCandidateBtn" class="btn btn-primary hidden" onclick="addCandidate()">
+            ➕ Add Another Candidate
+          </button>
+          <button type="button" class="btn btn-success" onclick="submitForm()" style="min-width: 200px;">
+            ✅ Submit All Candidates
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div id="messageContainer"></div>
+    </div>
+  </div>
+
+  <!-- Loader Overlay -->
+  <div class="loader-overlay" id="loader">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <div class="loader-text">Processing your submission...</div>
+      <p style="color: #7f8c8d; margin-top: 10px;">Please wait while we upload resumes and submit candidates</p>
+    </div>
+  </div>
+
+<script>
+// Configuration
+const N8N_WEBHOOK_URL = 'https://wowflo.io/forms/3/public?execution_id=19343f9d-f6a8-43b0-855a-06a078dcbeb5&type=agency&jd=%3Cb%3Easdfdxfg%3C%2Fb%3E&position=Software%20Devloper&department=IT&division=OTTO&experience=3&skills=React&salary=1-3%20lakh&vacancies=1&languages=english';
+const N8N_GET_JD_URL = 'https://n8n.wowflo.io/webhook/get_jd';
+
+// Get execution_id from URL
+const urlParams = new URLSearchParams(window.location.search);
+// const EXECUTION_ID = 19343
+
+const EXECUTION_ID = urlParams.get('execution_id') || urlParams.get('executionId') || '';
+const TYPE = urlParams.get('type') || 'agency';
+
+console.log('Execution ID:', EXECUTION_ID);
+console.log('Type:', TYPE);
+
+// Initialize on page load
+window.addEventListener('load', function() {
+  if (EXECUTION_ID) {
+    document.getElementById('executionBadge').style.display = 'block';
+    document.getElementById('executionText').textContent = `📌 Request ID: ${EXECUTION_ID} | Type: ${TYPE.toUpperCase()}`;
+  }
+  
+  // Check if JD is in URL parameters first
+  const jdFromURL = urlParams.get('jd');
+  const positionFromURL = urlParams.get('position');
+  const departmentFromURL = urlParams.get('department');
+  const divisionFromURL = urlParams.get('division');
+  const experienceFromURL = urlParams.get('experience');
+  const skillsFromURL = urlParams.get('skills');
+  const salaryFromURL = urlParams.get('salary');
+  const vacanciesFromURL = urlParams.get('vacancies') || urlParams.get('numberofvacancy');
+  const languagesFromURL = urlParams.get('languages') || urlParams.get('Languages');
+  
+  if (jdFromURL || positionFromURL) {
+    console.log('Using JD from URL parameters');
+    displayJDFromURL({
+      jd: jdFromURL,
+      position: positionFromURL,
+      department: departmentFromURL,
+      division: divisionFromURL,
+      experience: experienceFromURL,
+      skills: skillsFromURL,
+      salary: salaryFromURL,
+      vacancies: vacanciesFromURL,
+      languages: languagesFromURL
+    });
+  } else if (EXECUTION_ID) {
+    console.log('Fetching JD from API');
+    fetchJobDescription();
+  }
+});
+
+// Fetch Job Description
+async function fetchJobDescription() {
+  const jdCard = document.getElementById('jdCard');
+  const jdLoading = document.getElementById('jdLoading');
+  const jdMetaGrid = document.getElementById('jdMetaGrid');
+  const jdContentSection = document.getElementById('jdContentSection');
+  const jdContent = document.getElementById('jdContent');
+  
+  try {
+    jdCard.classList.add('show');
+    
+    const response = await fetch(`${N8N_GET_JD_URL}?execution_id=${encodeURIComponent(EXECUTION_ID)}`);
+    
+    if (response.ok) {
+      const data = await response.json();
+      const field2 = data.body?.form_data?.field_2 || data;
+      
+      jdLoading.style.display = 'none';
+      
+      // Build meta grid
+      let metaHTML = '<div class="jd-meta-grid">';
+      if (field2.position) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Position</div><div class="jd-meta-value">${field2.position}</div></div>`;
+      if (field2.department) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Department</div><div class="jd-meta-value">${field2.department}</div></div>`;
+      if (field2.division) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Division</div><div class="jd-meta-value">${field2.division}</div></div>`;
+      if (field2.experience) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Experience</div><div class="jd-meta-value">${field2.experience} Years</div></div>`;
+      if (field2.skills) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Key Skills</div><div class="jd-meta-value">${field2.skills}</div></div>`;
+      if (field2.salary) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Salary Range</div><div class="jd-meta-value">${field2.salary}</div></div>`;
+      if (field2.numberofvacancy) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Vacancies</div><div class="jd-meta-value">${field2.numberofvacancy}</div></div>`;
+      metaHTML += '</div>';
+      
+      jdMetaGrid.innerHTML = metaHTML;
+      jdMetaGrid.style.display = 'block';
+      
+      if (field2.jd) {
+        jdContent.innerHTML = field2.jd;
+        jdContentSection.style.display = 'block';
+      }
+    } else {
+      jdLoading.innerHTML = '⚠️ Job details unavailable';
+      jdLoading.style.color = '#856404';
+    }
+  } catch (error) {
+    console.error('Error fetching JD:', error);
+    jdLoading.innerHTML = '⚠️ Could not load job details';
+    jdLoading.style.color = '#856404';
+  }
+}
+
+// Display JD from URL parameters
+function displayJDFromURL(data) {
+  const jdCard = document.getElementById('jdCard');
+  const jdLoading = document.getElementById('jdLoading');
+  const jdMetaGrid = document.getElementById('jdMetaGrid');
+  const jdContentSection = document.getElementById('jdContentSection');
+  const jdContent = document.getElementById('jdContent');
+  
+  // Show the card
+  jdCard.classList.add('show');
+  jdLoading.style.display = 'none';
+  
+  // Build meta grid
+  let metaHTML = '<div class="jd-meta-grid">';
+  if (data.position) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Position</div><div class="jd-meta-value">${decodeURIComponent(data.position)}</div></div>`;
+  if (data.department) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Department</div><div class="jd-meta-value">${decodeURIComponent(data.department)}</div></div>`;
+  if (data.division) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Division</div><div class="jd-meta-value">${decodeURIComponent(data.division)}</div></div>`;
+  if (data.experience) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Experience</div><div class="jd-meta-value">${data.experience} Years</div></div>`;
+  if (data.skills) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Key Skills</div><div class="jd-meta-value">${decodeURIComponent(data.skills)}</div></div>`;
+  if (data.salary) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Salary Range</div><div class="jd-meta-value">${decodeURIComponent(data.salary)}</div></div>`;
+  if (data.vacancies) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Vacancies</div><div class="jd-meta-value">${data.vacancies}</div></div>`;
+  if (data.languages) metaHTML += `<div class="jd-meta-item"><div class="jd-meta-label">Languages</div><div class="jd-meta-value">${decodeURIComponent(data.languages)}</div></div>`;
+  metaHTML += '</div>';
+  
+  if (metaHTML !== '<div class="jd-meta-grid"></div>') {
+    jdMetaGrid.innerHTML = metaHTML;
+    jdMetaGrid.style.display = 'block';
+  }
+  
+  // Display JD content if available
+  if (data.jd) {
+    const decodedJD = decodeURIComponent(data.jd);
+    jdContent.innerHTML = decodedJD;
+    jdContentSection.style.display = 'block';
+  }
+  
+  console.log('JD displayed from URL parameters');
+}
+
+// Handle submission type change
+function handleSubmissionTypeChange() {
+  const type = document.getElementById('submissionType').value;
+  const agencySection = document.getElementById('agencySection');
+  const applicantSection = document.getElementById('applicantSection');
+  const importSection = document.getElementById('importSection');
+  const candidatesContainer = document.getElementById('candidatesContainer');
+  const actionsSection = document.getElementById('actionsSection');
+  const addCandidateBtn = document.getElementById('addCandidateBtn');
+  
+  // Reset
+  candidatesContainer.innerHTML = '';
+  document.getElementById('agencyName').value = '';
+  document.getElementById('agencyEmail').value = '';
+  document.getElementById('referralChoice').value = '';
+  handleReferralChange();
+  
+  if (type === 'agency') {
+    agencySection.classList.remove('hidden');
+    applicantSection.classList.add('hidden');
+    importSection.classList.remove('hidden');
+    candidatesContainer.classList.remove('hidden');
+    actionsSection.classList.remove('hidden');
+    addCandidateBtn.classList.remove('hidden');
+    addCandidate();
+  } else if (type === 'applicant') {
+    agencySection.classList.add('hidden');
+    applicantSection.classList.remove('hidden');
+    importSection.classList.add('hidden');
+    candidatesContainer.classList.remove('hidden');
+    actionsSection.classList.remove('hidden');
+    addCandidateBtn.classList.add('hidden');
+    addSingleCandidate();
+  } else {
+    agencySection.classList.add('hidden');
+    applicantSection.classList.add('hidden');
+    importSection.classList.add('hidden');
+    candidatesContainer.classList.add('hidden');
+    actionsSection.classList.add('hidden');
+  }
+}
+
+// Handle referral change
+function handleReferralChange() {
+  const choice = document.getElementById('referralChoice').value;
+  const referralFields = document.getElementById('referralFields');
+  const sourceField = document.getElementById('sourceField');
+  const empIdInput = document.getElementById('referralEmpId');
+  const empEmailInput = document.getElementById('referralEmpEmail');
+  const sourceSelect = document.getElementById('sourceSelect');
+  
+  if (choice === 'yes') {
+    referralFields.classList.remove('hidden');
+    sourceField.classList.add('hidden');
+    empIdInput.required = true;
+    empEmailInput.required = true;
+    sourceSelect.required = false;
+    sourceSelect.value = '';
+  } else if (choice === 'no') {
+    referralFields.classList.add('hidden');
+    sourceField.classList.remove('hidden');
+    empIdInput.required = false;
+    empEmailInput.required = false;
+    empIdInput.value = '';
+    empEmailInput.value = '';
+    sourceSelect.required = true;
+  } else {
+    referralFields.classList.add('hidden');
+    sourceField.classList.add('hidden');
+    empIdInput.required = false;
+    empEmailInput.required = false;
+    sourceSelect.required = false;
+  }
+}
+
+// Add single candidate (applicant)
+function addSingleCandidate() {
+  const container = document.getElementById('candidatesContainer');
+  const html = createCandidateHTML(1, false);
+  container.innerHTML = html;
+}
+
+// Add candidate (agency)
+function addCandidate() {
+  const container = document.getElementById('candidatesContainer');
+  const count = container.querySelectorAll('.candidate-card').length + 1;
+  const html = createCandidateHTML(count, true);
+  const div = document.createElement('div');
+  div.innerHTML = html;
+  container.appendChild(div.firstElementChild);
+}
+
+// Create candidate HTML
+function createCandidateHTML(number, showDelete) {
+  return `
+    <div class="candidate-card">
+      <div class="candidate-header">
+        <div class="candidate-number">
+          <div class="candidate-badge">${number}</div>
+          <span>${showDelete ? `Candidate ${number}` : 'Your Details'}</span>
+        </div>
+        ${showDelete ? '<button type="button" class="btn btn-danger" onclick="deleteCandidate(this)">🗑️ Remove</button>' : ''}
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name <span class="required">*</span></label>
+          <input type="text" class="cand-name" placeholder="Enter full name" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address <span class="required">*</span></label>
+          <input type="email" class="cand-email" placeholder="candidate@email.com" required>
+        </div>
+        <div class="form-group">
+          <label>Current Organization</label>
+          <input type="text" class="cand-org" placeholder="Company name">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Total Experience (Years)</label>
+          <input type="number" class="cand-exp" placeholder="e.g., 5" min="0">
+        </div>
+        <div class="form-group">
+          <label>Notice Period (Days)</label>
+          <input type="number" class="cand-notice" placeholder="e.g., 30" min="0">
+        </div>
+        <div class="form-group">
+          <label>Current Location</label>
+          <input type="text" class="cand-loc" placeholder="City, State">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>Preferred Location</label>
+          <input type="text" class="cand-pref" placeholder="City, State">
+        </div>
+        <div class="form-group">
+          <label>Current CTC (LPA)</label>
+          <input type="text" class="cand-ctc" placeholder="e.g., 8">
+        </div>
+        <div class="form-group">
+          <label>Expected CTC (LPA)</label>
+          <input type="text" class="cand-ectc" placeholder="e.g., 12">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label>LinkedIn Profile</label>
+          <input type="url" class="cand-li" placeholder="https://linkedin.com/in/username">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Additional Remarks</label>
+        <textarea class="cand-rem" placeholder="Any additional information about the candidate..." rows="3"></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Resume <span class="required">*</span></label>
+        <div class="upload-area" onclick="this.querySelector('input').click()">
+          <div class="upload-icon">📄</div>
+          <div class="upload-text">Click to upload resume</div>
+          <div class="upload-hint">Supported formats: PDF, DOC, DOCX (Max 5MB)</div>
+          <input type="file" class="cand-resume" accept=".pdf,.doc,.docx" required onchange="handleResumeUpload(this)" style="display: none;">
+          <div class="file-info" style="display: none;"></div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// Delete candidate
+function deleteCandidate(btn) {
+  const container = document.getElementById('candidatesContainer');
+  const cards = container.querySelectorAll('.candidate-card');
+  
+  if (cards.length <= 1) {
+    showMessage('❌ You must have at least one candidate', 'error');
+    return;
+  }
+  
+  btn.closest('.candidate-card').remove();
+  updateCandidateNumbers();
+}
+
+// Update candidate numbers
+function updateCandidateNumbers() {
+  const cards = document.querySelectorAll('.candidate-card');
+  cards.forEach((card, index) => {
+    const badge = card.querySelector('.candidate-badge');
+    const title = card.querySelector('.candidate-number span');
+    if (badge) badge.textContent = index + 1;
+    if (title) title.textContent = `Candidate ${index + 1}`;
+  });
+}
+
+// Handle resume upload
+function handleResumeUpload(input) {
+  const file = input.files[0];
+  const uploadArea = input.closest('.upload-area');
+  const fileInfo = uploadArea.querySelector('.file-info');
+  const uploadIcon = uploadArea.querySelector('.upload-icon');
+  
+  if (!file) {
+    uploadArea.classList.remove('has-file');
+    fileInfo.style.display = 'none';
+    uploadIcon.textContent = '📄';
+    return;
+  }
+  
+  // File size check (5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    showMessage('❌ File size must be less than 5MB', 'error');
+    input.value = '';
+    return;
+  }
+  
+  fileInfo.innerHTML = '⏳ Processing file...';
+  fileInfo.style.display = 'block';
+  fileInfo.style.color = '#667eea';
+  
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const base64Data = e.target.result;
+    input.setAttribute('data-base64', base64Data);
+    input.setAttribute('data-filename', file.name);
+    input.setAttribute('data-filetype', file.type);
+    input.setAttribute('data-filesize', file.size);
+    
+    uploadArea.classList.add('has-file');
+    uploadIcon.textContent = '✅';
+    fileInfo.innerHTML = `📎 ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+    fileInfo.style.color = '#28a745';
+  };
+  
+  reader.onerror = function() {
+    fileInfo.innerHTML = '❌ Error reading file';
+    fileInfo.style.color = '#e74c3c';
+  };
+  
+  reader.readAsDataURL(file);
+}
+
+// Download CSV template
+function downloadCSV() {
+  const csv = "Candidate Name*,Candidate Email*,Current Organization,Experience (Years),Notice Period (Days),Current Location,Preferred Location,Current CTC (LPA),Expected CTC (LPA),LinkedIn Profile,Remarks\n" +
+    "Rajesh Kumar,rajesh@email.com,Infosys,5,60,Bangalore,Hyderabad,8,12,https://linkedin.com/in/rajesh,Java developer with 5 years experience\n" +
+    "Priya Sharma,priya@email.com,TCS,3,30,Mumbai,Pune,6,9,https://linkedin.com/in/priya,Full-stack developer";
+  
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'otto_candidates_template.csv';
+  a.click();
+  showMessage('✅ CSV template downloaded successfully!', 'success');
+}
+
+// Import CSV
+function importCSV(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    const rows = parseCSV(ev.target.result);
+    if (rows.length < 2) {
+      showMessage('❌ No data found in CSV file!', 'error');
+      return;
+    }
+    
+    const headers = rows[0];
+    const data = rows.slice(1).map(row => {
+      const obj = {};
+      headers.forEach((key, i) => obj[key] = row[i] || '');
+      return obj;
+    });
+    
+    const container = document.getElementById('candidatesContainer');
+    container.innerHTML = '';
+    
+    data.forEach((d, i) => {
+      const html = createCandidateHTML(i + 1, true);
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      const card = div.firstElementChild;
+      
+      // Populate fields
+      card.querySelector('.cand-name').value = d['Candidate Name*'] || '';
+      card.querySelector('.cand-email').value = d['Candidate Email*'] || '';
+      card.querySelector('.cand-org').value = d['Current Organization'] || '';
+      card.querySelector('.cand-exp').value = d['Experience (Years)'] || '';
+      card.querySelector('.cand-notice').value = d['Notice Period (Days)'] || '';
+      card.querySelector('.cand-loc').value = d['Current Location'] || '';
+      card.querySelector('.cand-pref').value = d['Preferred Location'] || '';
+      card.querySelector('.cand-ctc').value = d['Current CTC (LPA)'] || '';
+      card.querySelector('.cand-ectc').value = d['Expected CTC (LPA)'] || '';
+      card.querySelector('.cand-li').value = d['LinkedIn Profile'] || '';
+      card.querySelector('.cand-rem').value = d['Remarks'] || '';
+      
+      container.appendChild(card);
+    });
+    
+    showMessage(`✅ Imported ${data.length} candidate(s)! Please upload resumes individually.`, 'success');
+  };
+  
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+// Parse CSV
+function parseCSV(txt) {
+  const rows = [];
+  let row = [], field = '', inQuote = false;
+  
+  for (let i = 0; i < txt.length; i++) {
+    const c = txt[i], next = txt[i+1];
+    if (c === '"') {
+      if (inQuote && next === '"') { field += '"'; i++; }
+      else inQuote = !inQuote;
+    } else if (c === ',' && !inQuote) {
+      row.push(field.trim());
+      field = '';
+    } else if ((c === '\n' || c === '\r') && !inQuote) {
+      if (field || row.length) {
+        row.push(field.trim());
+        rows.push([...row]);
+        row = [];
+        field = '';
+      }
+      if (c === '\r' && next === '\n') i++;
+    } else field += c;
+  }
+  if (field || row.length) {
+    row.push(field.trim());
+    rows.push(row);
+  }
+  return rows.filter(r => r.some(c => c));
+}
+
+// Submit form
+async function submitForm() {
+  const submissionType = document.getElementById('submissionType').value;
+  
+  if (!submissionType) {
+    showMessage('❌ Please select a submission type!', 'error');
+    return;
+  }
+  
+  // Validate based on type
+  let submitterName = '';
+  let submitterEmail = '';
+  let referralEmpId = '';
+  let referralEmpEmail = '';
+  let source = '';
+  
+  if (submissionType === 'agency') {
+    submitterName = document.getElementById('agencyName').value;
+    submitterEmail = document.getElementById('agencyEmail').value;
+    
+    if (!submitterName || !submitterEmail) {
+      showMessage('❌ Please fill in agency details!', 'error');
+      return;
+    }
+  } else if (submissionType === 'applicant') {
+    const referralChoice = document.getElementById('referralChoice').value;
+    
+    if (!referralChoice) {
+      showMessage('❌ Please answer the referral question!', 'error');
+      return;
+    }
+    
+    if (referralChoice === 'yes') {
+      referralEmpId = document.getElementById('referralEmpId').value;
+      referralEmpEmail = document.getElementById('referralEmpEmail').value;
+      
+      if (!referralEmpId || !referralEmpEmail) {
+        showMessage('❌ Please fill in employee referral details!', 'error');
+        return;
+      }
+    } else {
+      source = document.getElementById('sourceSelect').value;
+      
+      if (!source) {
+        showMessage('❌ Please select where you found this opening!', 'error');
+        return;
+      }
+    }
+  }
+  
+  // Collect candidates
+  const candidates = [];
+  const cards = document.querySelectorAll('.candidate-card');
+  
+  for (let card of cards) {
+    const name = card.querySelector('.cand-name').value;
+    const email = card.querySelector('.cand-email').value;
+    const resumeInput = card.querySelector('.cand-resume');
+    
+    if (!name || !email) {
+      showMessage('❌ All candidates must have name and email!', 'error');
+      return;
+    }
+    
+    if (!resumeInput.files[0]) {
+      showMessage(`❌ Please upload resume for ${name}!`, 'error');
+      return;
+    }
+    
+    const base64Data = resumeInput.getAttribute('data-base64');
+    if (!base64Data) {
+      showMessage(`❌ Resume for ${name} is still processing. Please wait.`, 'error');
+      return;
+    }
+    
+    candidates.push({
+      candidate_name: name,
+      candidate_email: email,
+      current_organization: card.querySelector('.cand-org').value,
+      experience: card.querySelector('.cand-exp').value,
+      notice_period: card.querySelector('.cand-notice').value,
+      current_location: card.querySelector('.cand-loc').value,
+      preferred_location: card.querySelector('.cand-pref').value,
+      current_ctc: card.querySelector('.cand-ctc').value,
+      expected_ctc: card.querySelector('.cand-ectc').value,
+      linkedin: card.querySelector('.cand-li').value,
+      remarks: card.querySelector('.cand-rem').value,
+      resume: {
+        name: resumeInput.getAttribute('data-filename'),
+        type: resumeInput.getAttribute('data-filetype'),
+        size: parseInt(resumeInput.getAttribute('data-filesize')),
+        data: base64Data
+      }
+    });
+  }
+  
+  // Show loader
+  document.getElementById('loader').classList.add('active');
+  
+  // Build payload
+  const payload = {
+    execution_id: EXECUTION_ID,
+    submission_type: submissionType,
+    submitter_name: submitterName,
+    submitter_email: submitterEmail,
+    referral_emp_id: referralEmpId,
+    referral_emp_email: referralEmpEmail,
+    source: source,
+    candidateContainer: candidates,
+    submitted_at: new Date().toISOString()
+  };
+  
+  console.log('📤 Submitting:', payload);
+  
+  try {
+    const response = await fetch(N8N_WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+    
+    document.getElementById('loader').classList.remove('active');
+    
+    if (response.ok) {
+      showMessage(`✅ Successfully submitted ${candidates.length} candidate(s)! We'll be in touch soon.`, 'success');
+      setTimeout(() => {
+        if (confirm('Submission successful! Would you like to submit more candidates?')) {
+          location.reload();
+        }
+      }, 2000);
+    } else {
+      const errorText = await response.text();
+      console.error('❌ Error:', errorText);
+      showMessage(`❌ Submission failed: ${response.statusText}`, 'error');
+    }
+  } catch (error) {
+    document.getElementById('loader').classList.remove('active');
+    console.error('❌ Error:', error);
+    showMessage(`❌ Error: ${error.message}`, 'error');
+  }
+}
+
+// Show message
+function showMessage(text, type) {
+  const container = document.getElementById('messageContainer');
+  const className = type === 'success' ? 'message-success' : 'message-error';
+  const icon = type === 'success' ? '✅' : '❌';
+  
+  container.innerHTML = `
+    <div class="message ${className}">
+      <span style="font-size: 1.5rem;">${icon}</span>
+      <span>${text}</span>
+    </div>
+  `;
+  
+  container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  
+  if (type === 'success') {
+    setTimeout(() => container.innerHTML = '', 8000);
+  }
+}
+</script>
+</body>
+</html>
